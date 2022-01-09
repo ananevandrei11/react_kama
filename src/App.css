@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  word-break: break-word;
+}
+html,
+body {
+  height: 100%;
+}
+
+.app-wrapper {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar content" 
+    "footer footer";
+  grid-template-columns: 2fr 10fr;
+  grid-template-rows: 60px 1fr 60px;
+  gap: 10px;
+}
+
+.app-wrapper-content {
+  grid-area: content;
+  background-color: blueviolet;
+}
+
+.app-wrapper-sidebar {
+  padding: 20px;
+  grid-area: sidebar;
+  background-color: aquamarine;
+}

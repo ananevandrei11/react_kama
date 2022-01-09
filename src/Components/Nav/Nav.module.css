@@ -1,0 +1,14 @@
+.nav {
+    margin-bottom: 20px;
+}
+
+.item a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.item .activeLink {
+    color: rgb(175, 175, 25);
+    font-size: 120%;
+}

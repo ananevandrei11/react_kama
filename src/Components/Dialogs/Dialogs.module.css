@@ -1,0 +1,32 @@
+.dialogs {
+	display: grid;
+	grid-template-columns: 2fr 10fr;
+}
+
+.names {
+	padding: 10px;
+}
+
+.names__items {
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+.names__items:last-of-type {
+	margin-bottom: 0;
+}
+
+
+.names__itemsActive {
+	color: gold;
+	font-size: 120%;
+}
+
+.messeges {
+	padding: 10px;
+}
+
+.newMessage {
+	padding: 10px;
+	grid-column: 1 / -1;
+}

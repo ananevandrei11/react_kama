@@ -1,0 +1,17 @@
+.profileInfo {
+  max-width: 100%;
+}
+
+.profileInfo__banner {
+  height: 200px;
+}
+
+.profileInfo__banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileInfo__description {
+  padding: 10px;
+}

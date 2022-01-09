@@ -1,0 +1,13 @@
+.names__items {
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+.names__items:last-of-type {
+	margin-bottom: 0;
+}
+
+.names__itemsActive {
+	color: gold;
+	font-size: 120%;
+}

@@ -1,0 +1,11 @@
+.newMessage__form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.newMessage__form button {
+	width: fit-content;
+	padding: 4px;
+	cursor: pointer;
+}

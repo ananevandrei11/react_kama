@@ -1,0 +1,5 @@
+.friendsBar {
+	display: grid;
+	grid-template-columns: 1fr;
+	font-style: italic;
+}
