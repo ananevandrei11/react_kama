@@ -14,36 +14,27 @@ import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 
 const App = (props) => {
-  const users = props.state.dialogPage.users;
-  const messages = props.state.dialogPage.messages;
-  const posts = props.state.profilePage.posts;
-  const friends = props.state.sideBar.friends;
 
   return (
     <div className="app-wrapper">
       <Header />
       <aside className="app-wrapper-sidebar">
         <Nav />
-        <FriendsBar friends={friends} />
+        <FriendsBar friends={props.state.sideBar.friends} />
       </aside>
       <main className="app-wrapper-content">
         <Switch>
           <Route path="/dialogs">
             <Dialogs
-              users={users}
-              messages={messages}
-              newMessage={props.state.dialogPage.newMessage}
-              addMessage={props.addMessage}
-              updateMessage={props.updateMessage}
+              dialogPage={props.state.dialogPage}
+              dispatch={props.dispatch}
             />
           </Route>
 
           <Route path="/profile">
             <Profile
-              posts={posts}
-              addPost={props.addPost}
-              updatePost={props.updatePost}
-              newPostText={props.state.profilePage.newPostText}
+              profilePage={props.state.profilePage}
+              dispatch={props.dispatch}
             />
           </Route>
 

@@ -5,8 +5,8 @@ import DialogUser from "./DialogUser/DialogsUser";
 import NewMessage from "./NewMessage/NewMessage";
 
 const Dialogs = (props) => {
-    const users = props.users;
-    const messages = props.messages;
+    let users = props.dialogPage.users;
+    let messages = props.dialogPage.messages;
 
     return (
         <div className={classes.dialogs}>
@@ -22,9 +22,8 @@ const Dialogs = (props) => {
             </section>
             <section className={classes.newMessage}>
                 <NewMessage
-                    newMessage={props.newMessage}
-                    addMessage={props.addMessage}
-                    updateMessage={props.updateMessage}
+                    newMessage={props.dialogPage.newMessage}
+                    dispatch={props.dispatch}
                 />
             </section>
         </div>

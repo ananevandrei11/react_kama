@@ -3,7 +3,7 @@ import Friend from "./Friend/Friend";
 import classes from './FriendsBar.module.css';
 
 const FriendsBar = (props) => {
-    const friends = props.friends;
+    let friends = props.friends;
 
     return (
         <section className={classes.friendsBar}>
