@@ -29,7 +29,7 @@ const NewMessage = (props) => {
                 value={newMessage}
                 onChange={onPostChange}
             ></textarea>
-            <button onClick={addMessage}>Add New Message</button>
+            <button onClick={addMessage}>Add New Message!!</button>
         </form>
     )
 }
