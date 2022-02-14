@@ -1,29 +1,24 @@
 import React from "react";
-import {
-  addMessageActionCreator,
-  updateNewMessageTextActionCreator
-} from "../../../Redux/Store";
+import { addMessageCreator, updateNewMessageTextCreator } from "../../../Redux/dialogsReducer";
 import classes from './NewMessage.module.css';
 
 const NewMessage = (props) => {
     let newMessage = props.newMessage;
-    let newMessageELem = React.createRef();
 
     let addMessage = (e) => {
         e.preventDefault();
-        let action = addMessageActionCreator();
+        let action = addMessageCreator();
         props.dispatch(action);
     }
     let onPostChange = (e) => {
         e.preventDefault();
-        let text = newMessageELem.current.value;
-        let action = updateNewMessageTextActionCreator(text);
+        let text = e.target.value;
+        let action = updateNewMessageTextCreator(text);
         props.dispatch(action);
     }
     return (
         <form action="" className={classes.newMessage__form}>
             <textarea
-                ref={newMessageELem}
                 rows="10"
                 value={newMessage}
                 onChange={onPostChange}

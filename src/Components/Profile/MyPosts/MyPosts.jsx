@@ -1,10 +1,7 @@
 import React from "react";
 import Post from "./Post/Post";
 import classes from './MyPosts.module.css';
-import { 
-  addPostActionCreator,
-  updateNewPostTextActionCreator 
-} from "../../../Redux/Store";
+import { addPostCreator, updateNewPostTextCreator } from "../../../Redux/profileReducer";
 
 
 
@@ -24,18 +21,16 @@ const MyPosts = (props) => {
     />
   );
 
-  let newPostELem = React.createRef();
-
   let addPost = (e) => {
     e.preventDefault();
-    let action = addPostActionCreator();
+    let action = addPostCreator();
     props.dispatch(action);
   }
 
   let onPostChange = (e) => {
     e.preventDefault();
-    let text = newPostELem.current.value;
-    let action = updateNewPostTextActionCreator(text);
+    let text = e.target.value;
+    let action = updateNewPostTextCreator(text);
     props.dispatch(action);
   }
 
@@ -44,7 +39,6 @@ const MyPosts = (props) => {
       <h2 className={classes.title}>My Posts</h2>
       <form className={classes.newpost}>
         <textarea
-          ref={newPostELem}
           rows="5"
           value={newPostText}
           onChange={onPostChange}

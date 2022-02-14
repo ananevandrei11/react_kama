@@ -5,6 +5,12 @@
     gap: 10px;
 }
 
+@media screen and (max-width: 599px) {
+    .posts {
+        grid-template-columns: 1fr;
+    }
+}
+
 .title {
     margin-bottom: 10px;
     grid-column: 1 / -1;
