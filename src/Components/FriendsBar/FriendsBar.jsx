@@ -3,8 +3,7 @@ import Friend from "./Friend/Friend";
 import classes from './FriendsBar.module.css';
 
 const FriendsBar = (props) => {
-    let friends = props.friends;
-
+    let friends = props.store.getState().sideBar.friends;
     return (
         <section className={classes.friendsBar}>
             {friends.map((friend) =>

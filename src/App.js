@@ -14,27 +14,24 @@ import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 
 const App = (props) => {
-
   return (
     <div className="app-wrapper">
       <Header />
       <aside className="app-wrapper-sidebar">
         <Nav />
-        <FriendsBar friends={props.state.sideBar.friends} />
+        <FriendsBar store={props.store} />
       </aside>
       <main className="app-wrapper-content">
         <Switch>
           <Route path="/dialogs">
             <Dialogs
-              dialogPage={props.state.dialogPage}
-              dispatch={props.dispatch}
+              store={props.store}
             />
           </Route>
 
           <Route path="/profile">
             <Profile
-              profilePage={props.state.profilePage}
-              dispatch={props.dispatch}
+              store={props.store}
             />
           </Route>
 
