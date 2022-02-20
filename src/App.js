@@ -19,20 +19,16 @@ const App = (props) => {
       <Header />
       <aside className="app-wrapper-sidebar">
         <Nav />
-        <FriendsBar store={props.store} />
+        <FriendsBar />
       </aside>
       <main className="app-wrapper-content">
         <Switch>
           <Route path="/dialogs">
-            <Dialogs
-              store={props.store}
-            />
+            <Dialogs />
           </Route>
 
           <Route path="/profile">
-            <Profile
-              store={props.store}
-            />
+            <Profile />
           </Route>
 
           <Route path="/news">
