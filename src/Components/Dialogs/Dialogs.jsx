@@ -3,35 +3,35 @@ import classes from './Dialogs.module.css';
 import DialogMessage from "./DialogMessage/DialogsMessage";
 import DialogUser from "./DialogUser/DialogsUser";
 import NewMessageContainer from "./NewMessage/NewMessageContainer";
-import StoreContext from "../../StoreContext";
+import { connect } from "react-redux";
 
 const Dialogs = (props) => {
-	return <StoreContext.Consumer>
-		{
-			(store) => {
-				let users = store.getState().dialogPage.users;
-				let messages = store.getState().dialogPage.messages;
-
-				return (
-					<div className={classes.dialogs}>
-						<aside className={classes.names}>
-							{users.map((user) =>
-								<DialogUser key={user.id} id={user.id} name={user.name} />
-							)}
-						</aside>
-						<section >
-							{messages.map((message) =>
-								<DialogMessage key={message.id} message={message.text} />
-							)}
-						</section>
-						<section className={classes.newMessage}>
-							<NewMessageContainer />
-						</section>
-					</div>
-				);
-			}
-		}
-	</StoreContext.Consumer>
+	return (
+		<div className={classes.dialogs}>
+			<aside className={classes.names}>
+				{props.users.map((user) =>
+					<DialogUser key={user.id} id={user.id} name={user.name} />
+				)}
+			</aside>
+			<section >
+				{props.messages.map((message) =>
+					<DialogMessage key={message.id} message={message.text} />
+				)}
+			</section>
+			<section className={classes.newMessage}>
+				<NewMessageContainer />
+			</section>
+		</div>
+	);
 }
 
-export default Dialogs;
+let mapStateToProps = (state) => {
+	return {
+		users: state.dialogPage.users,
+		messages: state.dialogPage.messages
+	}
+}
+
+const DialogsContainer = connect(mapStateToProps)(Dialogs);
+
+export default DialogsContainer;

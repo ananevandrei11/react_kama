@@ -9,7 +9,7 @@ import Nav from './Components/Nav/Nav';
 import FriendsBar from "./Components/FriendsBar/FriendsBar";
 import Profile from './Components/Profile/Profile';
 import Footer from './Components/Footer/Footer';
-import Dialogs from './Components/Dialogs/Dialogs';
+import DialogsContainer from './Components/Dialogs/Dialogs';
 import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 
@@ -24,7 +24,7 @@ const App = (props) => {
       <main className="app-wrapper-content">
         <Switch>
           <Route path="/dialogs">
-            <Dialogs />
+            <DialogsContainer />
           </Route>
 
           <Route path="/profile">
