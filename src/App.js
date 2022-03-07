@@ -12,6 +12,7 @@ import Footer from './Components/Footer/Footer';
 import DialogsContainer from './Components/Dialogs/Dialogs';
 import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
+import UsersContainer from "./Components/Users/UsersContainer";
 
 const App = (props) => {
   return (
@@ -29,6 +30,10 @@ const App = (props) => {
 
           <Route path="/profile">
             <Profile />
+          </Route>
+
+          <Route path="/users">
+            <UsersContainer/>
           </Route>
 
           <Route path="/news">
