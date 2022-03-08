@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "avatarURL": "",
+      "fullName": "Andrei",
+      "status": "I am web-developer",
+      "location": { "city": "Samara", "country": "Russia" },
+      "followed": false
+    },
+      {
+        "id": 2,
+        "avatarURL": "",
+        "fullName": "Sergei",
+        "status": "I am backend",
+        "location": {
+          "city": "Orsk",
+          "country": "Russia"
+        },
+        "followed": true
+      },
+      {
+        "id": 3,
+        "avatarURL": "",
+        "fullName": "Victor",
+        "status": "I am frontend",
+        "location": {
+          "city": "Moscow",
+          "country": "Russia"
+        },
+        "followed": true
+      },
+      {
+        "id": 4,
+        "avatarURL": "",
+        "fullName": "Marina",
+        "status": "I am C++",
+        "location": {
+          "city": "SPb",
+          "country": "Russia"
+        },
+        "followed": false
+      }
+  ]
+}
