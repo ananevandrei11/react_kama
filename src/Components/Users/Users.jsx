@@ -1,29 +1,27 @@
-import React, { useRef } from "react";
-import * as axios from "axios";
+import React from "react";
 import userNoAvatar from "../../Asets/images/noavatar.svg";
+import classes from './Users.module.css';
 
 const Users = (props) => {
-  let btnGetUser = useRef(null);
-
-  let getUsers = () => {
-    let myUrl = 'https://test.aniganweb.ru/testapi/testusers.json';
-    let samuraiUrl = 'https://social-network.samuraijs.com/api/1.0/users'
-    axios.get(samuraiUrl)
-      .then(function (response) {
-        props.setUsers(response.data.items);
-        btnGetUser.current.style.display = 'none';
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  let pagesCount = Math.ceil(props.totalUsersCount / props.countPage);
+  let pages = [];
+  for (let i = 1; i <= pagesCount; i++) {
+    pages.push(i);
   }
 
   return (
     <div>
-      <button
-        onClick={() => getUsers()}
-        ref={btnGetUser}
-      >Get Users</button>
+      <div className={classes.pages}>
+        {
+          pages.map((page, index) =>
+            <span
+              key={index}
+              className={((props.currentPage === page) ? classes.selectedPage : '') + ' ' + classes.numPage}
+              onClick={() => { props.onPageChanged(page) }}
+            >{page}</span>
+          )
+        }
+      </div>
       {
         props.users.map((user) =>
           <article key={user.id.toString()}>
@@ -33,11 +31,10 @@ const Users = (props) => {
                   width="40"
                   height="40"
                   src={
-                    (user.photos.small != null)
-                      ? user.photos.small : userNoAvatar
+                    (user.photos.small != null) ? user.photos.small : userNoAvatar
                   }
                   alt=" "
-                  style={{ backgroundColor: "red" }}
+                  style={{ backgroundColor: "#fff" }}
                 />
               </figure>
               {user.followed
@@ -48,8 +45,8 @@ const Users = (props) => {
                 :
                 <button
                   onClick={() => { props.follow(user.id) }}
-                >Unfollow</button>}
-
+                >Unfollow</button>
+              }
             </div>
             <div>
               <p>{user.name}</p>
