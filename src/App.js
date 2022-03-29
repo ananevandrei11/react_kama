@@ -7,12 +7,12 @@ import './App.css';
 import Header from './Components/Header/Header';
 import Nav from './Components/Nav/Nav';
 import FriendsBar from "./Components/FriendsBar/FriendsBar";
-import Profile from './Components/Profile/Profile';
 import Footer from './Components/Footer/Footer';
 import DialogsContainer from './Components/Dialogs/Dialogs';
 import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 import UsersContainer from "./Components/Users/UsersContainer";
+import ProfileContainer from "./Components/Profile/ProfileContainer";
 
 const App = (props) => {
   return (
@@ -29,7 +29,7 @@ const App = (props) => {
           </Route>
 
           <Route path="/profile">
-            <Profile />
+            <ProfileContainer />
           </Route>
 
           <Route path="/users">

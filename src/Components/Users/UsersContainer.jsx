@@ -15,35 +15,6 @@ let mapStateToProps = (state) => {
   }
 }
 
-/*let mapDispatchToProps = (dispatch) => {
-  return {
-    follow: (userID) => {
-      let action = follow(userID);
-      dispatch(action);
-    },
-    unFollow: (userID) => {
-      let action = unFollow(userID);
-      dispatch(action);
-    },
-    setUsers: (users) => {
-      let action = setUsers(users);
-      dispatch(action);
-    },
-    setCurrentPage: (currentPage) => {
-      let action = setCurrentPage(currentPage);
-      dispatch(action);
-    },
-    setTotalUsersCount: (totalCount) => {
-      let action = setTotalUsersCount(totalCount);
-      dispatch(action);
-    },
-    toggleIsFetching: (isFetching) => {
-      let action = toggleIsFetching(isFetching);
-      dispatch(action);
-    }
-  }
-}*/
-
 class UsersSubContainer extends React.Component {
   constructor(props) {
     super(props);

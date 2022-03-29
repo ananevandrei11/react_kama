@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import userNoAvatar from "../../Asets/images/noavatar.svg";
 import classes from './Users.module.css';
 
@@ -27,6 +28,7 @@ const Users = (props) => {
           <article key={user.id.toString()}>
             <div>
               <figure>
+                <NavLink to={"/profile/" + user.id}>
                 <img
                   width="40"
                   height="40"
@@ -36,6 +38,7 @@ const Users = (props) => {
                   alt=" "
                   style={{ backgroundColor: "#fff" }}
                 />
+                </NavLink>
               </figure>
               {user.followed
                 ?
