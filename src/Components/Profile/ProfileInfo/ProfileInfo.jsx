@@ -23,7 +23,7 @@ const ProfileInfo = (props) => {
                 <img src={BGcontent} alt=" " />
             </figure>
             <section className={classes.profileInfo__description}>
-                <img src={props.profile.photos.small} alt="" />
+                <img src={props.profile.photos.large} alt="" />
                 <p>{props.profile.fullName}</p>
                 <p>About Me: {props.profile.aboutMe}</p>
                 <ul>

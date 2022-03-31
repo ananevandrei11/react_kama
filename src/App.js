@@ -4,7 +4,6 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
-import Header from './Components/Header/Header';
 import Nav from './Components/Nav/Nav';
 import FriendsBar from "./Components/FriendsBar/FriendsBar";
 import Footer from './Components/Footer/Footer';
@@ -13,11 +12,12 @@ import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
 import UsersContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
+import HeaderContainer from "./Components/Header/HeaderContainer";
 
 const App = (props) => {
   return (
     <div className="app-wrapper">
-      <Header />
+      <HeaderContainer />
       <aside className="app-wrapper-sidebar">
         <Nav />
         <FriendsBar />
@@ -28,7 +28,7 @@ const App = (props) => {
             <DialogsContainer />
           </Route>
 
-          <Route path="/profile">
+          <Route path="/profile/:userID?">
             <ProfileContainer />
           </Route>
 
