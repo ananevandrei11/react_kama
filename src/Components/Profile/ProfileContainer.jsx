@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import Profile from "./Profile";
-import { setUserProfile } from "../../Redux/profileReducer";
+import { setUserProfileByID } from "../../Redux/profileReducer";
 import { withRouter } from "react-router-dom";
-import { profileAPI } from "../../API/Api";
 
 class ProfileSubContainer extends React.Component {
 
@@ -11,10 +10,7 @@ class ProfileSubContainer extends React.Component {
     let userID = this.props.match.params.userID;
     let userAuthID = (this.props.isAuth) ? this.props.userId : 2;
     userID = (!userID) ? userAuthID : userID;
-    
-    profileAPI.setUserIDforProfile(userID).then(data => {
-      this.props.setUserProfile(data);
-    });
+    this.props.setUserProfileByID(userID);
   }
 
   render() {
@@ -35,7 +31,7 @@ let mapStateToProps = (state) => ({
 let WithUrlDataContainerComponent = withRouter(ProfileSubContainer);
 
 const ProfileContainer = connect(mapStateToProps, {
-  setUserProfile,
+  setUserProfileByID
 })(WithUrlDataContainerComponent);
 
 export default ProfileContainer;

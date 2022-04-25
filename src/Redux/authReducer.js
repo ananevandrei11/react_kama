@@ -1,3 +1,5 @@
+import { loginAPI } from "../API/Api";
+
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA';
 const TOGGLE_IS_AUTH = 'TOGGLE_IS_AUTH';
 
@@ -36,5 +38,17 @@ export const toggleIsAuth = (isAuth) => ({
 	type: TOGGLE_IS_AUTH,
 	isAuth
 });
+
+export const setAuthUser = () => {
+	return (dispatch) => {
+		loginAPI.checkLogin().then(data => {
+      if (data.resultCode === 0) {
+        dispatch(toggleIsAuth(true));
+        let { id, login, email } = data.data;
+        dispatch(setAuthUserData(id, login, email));
+      }
+    });
+	}
+};
 
 export default authReducer;

@@ -1,9 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleIsFollowingInProgress } from "../../Redux/usersReducer";
+import {
+  setCurrentPage, setTotalUsersCount,
+  toggleIsFetching, toggleIsFollowingInProgress,
+  getUsers, followChange
+} from "../../Redux/usersReducer";
 import Users from "./Users";
 import Preloder from "../Preloader/Preloader";
-import { userAPI } from "../../API/Api";
 
 let mapStateToProps = (state) => {
   return {
@@ -22,45 +25,11 @@ class UsersSubContainer extends React.Component {
   }
 
   onPageChanged = (pageNumber) => {
-    this.props.toggleIsFetching(true);
-    this.props.setCurrentPage(pageNumber);
-    userAPI.getUsers(pageNumber, this.props.countPage).then(data => {
-      this.props.toggleIsFetching(false);
-      this.props.setUsers(data.items);
-    });
-  }
-
-  follow = (userID) => {
-    this.props.toggleIsFollowingInProgress(true, userID);
-    userAPI.followUser(userID)
-      .then(data => {
-        if (data.resultCode === 0) {
-          this.props.follow(userID);
-        }
-        this.props.toggleIsFollowingInProgress(false, userID);
-      })
-  }
-
-  unFollow = (userID) => {
-    this.props.toggleIsFollowingInProgress(true, userID);
-    userAPI.unfollowUser(userID)
-      .then(data => {
-        if (data.resultCode === 0) {
-          this.props.unFollow(userID);
-        }
-        this.props.toggleIsFollowingInProgress(false, userID);
-      })
+    this.props.getUsers(pageNumber, this.props.countPage);
   }
 
   componentDidMount() {
-    this.props.toggleIsFetching(true);
-    userAPI.getUsers(this.props.currentPage, this.props.countPage).then(data => {
-      this.props.toggleIsFetching(false);
-      this.props.setUsers(data.items);
-      this.props.setTotalUsersCount(
-        (data.totalCount > 100) ? 100 : data.totalCount
-      );
-    });
+    this.props.getUsers(this.props.currentPage, this.props.countPage);
   }
 
   render() {
@@ -73,9 +42,7 @@ class UsersSubContainer extends React.Component {
           currentPage={this.props.currentPage}
           onPageChanged={this.onPageChanged}
           users={this.props.users}
-          unFollow={this.unFollow}
-          follow={this.follow}
-          isFetching={this.props.isFetching}
+          followChange={this.props.followChange}
           isFollowingInProgress={this.props.isFollowingInProgress}
         />
       </>
@@ -84,13 +51,12 @@ class UsersSubContainer extends React.Component {
 }
 
 const UsersContainer = connect(mapStateToProps, {
-  follow,
-  unFollow,
-  setUsers,
   setCurrentPage,
   setTotalUsersCount,
   toggleIsFetching,
-  toggleIsFollowingInProgress
+  toggleIsFollowingInProgress,
+  getUsers,
+  followChange
 })(UsersSubContainer);
 
 export default UsersContainer;

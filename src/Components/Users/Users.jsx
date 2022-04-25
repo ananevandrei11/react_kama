@@ -5,11 +5,12 @@ import classes from './Users.module.css';
 
 const Users = (props) => {
   let pagesCount = Math.ceil(props.totalUsersCount / props.countPage);
+  
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
   }
-  console.log(props.isFollowingInProgress);
+
   return (
     <div>
       <div className={classes.pages}>
@@ -44,16 +45,16 @@ const Users = (props) => {
                 ?
                 <button
                   onClick={() => {
-                    props.unFollow(user.id);
+                    props.followChange(user.id, 'unfollow');
                   }}
-                  disabled={props.isFollowingInProgress.some(id => id  === user.id)}
+                  disabled={props.isFollowingInProgress.some(id => id === user.id)}
                 >Follow</button>
                 :
                 <button
                   onClick={() => {
-                    props.follow(user.id);
+                    props.followChange(user.id, 'follow');
                   }}
-                  disabled={props.isFollowingInProgress.some(id => id  === user.id)}
+                  disabled={props.isFollowingInProgress.some(id => id === user.id)}
                 >Unfollow</button>
               }
             </div>
