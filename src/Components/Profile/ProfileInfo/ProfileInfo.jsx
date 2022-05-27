@@ -30,7 +30,7 @@ const ProfileInfo = (props) => {
                     {
                         contactsUser.map((site, index) => 
                             <li key={index}>
-                                <a href={site} target="_blank">{site}</a>
+                                <a href={site} target="_blank" rel="noreferrer">{site}</a>
                             </li>
                         )
                     }

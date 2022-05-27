@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import {
-  setCurrentPage, setTotalUsersCount,
-  toggleIsFetching, toggleIsFollowingInProgress,
-  getUsers, followChange
+  setCurrentPage,
+  setTotalUsersCount,
+  toggleIsFollowingInProgress,
+  getUsersThunk,
+  followChangeThunk,
 } from "../../Redux/usersReducer";
 import Users from "./Users";
 import Preloder from "../Preloader/Preloader";
@@ -16,20 +18,21 @@ let mapStateToProps = (state) => {
     currentPage: state.userPage.currentPage,
     isFetching: state.userPage.isFetching,
     isFollowingInProgress: state.userPage.isFollowingInProgress,
-  }
-}
+  };
+};
 
 class UsersSubContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   onPageChanged = (pageNumber) => {
-    this.props.getUsers(pageNumber, this.props.countPage);
-  }
+    this.props.getUsersThunk(pageNumber, this.props.countPage);
+  };
 
   componentDidMount() {
-    this.props.getUsers(this.props.currentPage, this.props.countPage);
+    this.props.getUsersThunk(this.props.currentPage, this.props.countPage);
   }
 
   render() {
@@ -42,21 +45,20 @@ class UsersSubContainer extends React.Component {
           currentPage={this.props.currentPage}
           onPageChanged={this.onPageChanged}
           users={this.props.users}
-          followChange={this.props.followChange}
+          followChange={this.props.followChangeThunk}
           isFollowingInProgress={this.props.isFollowingInProgress}
         />
       </>
-    )
+    );
   }
 }
 
 const UsersContainer = connect(mapStateToProps, {
   setCurrentPage,
   setTotalUsersCount,
-  toggleIsFetching,
   toggleIsFollowingInProgress,
-  getUsers,
-  followChange
+  getUsersThunk,
+  followChangeThunk,
 })(UsersSubContainer);
 
 export default UsersContainer;

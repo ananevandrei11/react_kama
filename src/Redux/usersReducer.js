@@ -122,7 +122,8 @@ export const toggleIsFollowingInProgress = (isFetching, userID) => ({
 	userID
 });
 
-export const getUsers = (currentPage, countPage) => {
+// This is thunk
+export const getUsersThunk = (currentPage, countPage) => {
 	return (dispatch) => {
 		dispatch(toggleIsFetching(true));
 		userAPI.getUsers(currentPage, countPage).then(data => {
@@ -139,7 +140,7 @@ export const getUsers = (currentPage, countPage) => {
 	}
 };
 
-export const followChange = (userID, action) => {
+export const followChangeThunk = (userID, action) => {
 	return (dispatch) => {
 		dispatch(toggleIsFetching(true));
 		dispatch(toggleIsFollowingInProgress(true, userID));

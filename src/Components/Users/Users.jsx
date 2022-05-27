@@ -18,7 +18,9 @@ const Users = (props) => {
           pages.map((page, index) =>
             <span
               key={index}
-              className={((props.currentPage === page) ? classes.selectedPage : '') + ' ' + classes.numPage}
+              className={(
+                (props.currentPage === page) ? 
+                classes.selectedPage : '') + ' ' + classes.numPage}
               onClick={() => { props.onPageChanged(page) }}
             >{page}</span>
           )
@@ -34,7 +36,8 @@ const Users = (props) => {
                     width="40"
                     height="40"
                     src={
-                      (user.photos.small != null) ? user.photos.small : userNoAvatar
+                      (user.photos.small != null) ? 
+                        user.photos.small : userNoAvatar
                     }
                     alt=" "
                     style={{ backgroundColor: "#fff" }}
@@ -47,14 +50,18 @@ const Users = (props) => {
                   onClick={() => {
                     props.followChange(user.id, 'unfollow');
                   }}
-                  disabled={props.isFollowingInProgress.some(id => id === user.id)}
+                  disabled={
+                    props.isFollowingInProgress.some(id => id === user.id)
+                  }
                 >Follow</button>
                 :
                 <button
                   onClick={() => {
                     props.followChange(user.id, 'follow');
                   }}
-                  disabled={props.isFollowingInProgress.some(id => id === user.id)}
+                  disabled={
+                    props.isFollowingInProgress.some(id => id === user.id)
+                  }
                 >Unfollow</button>
               }
             </div>
