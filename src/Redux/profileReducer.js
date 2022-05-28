@@ -64,10 +64,24 @@ const profileReducer = (state = initialState, action) => {
 export const addPostCreator = () => ({
 	type: ADD_POST
 });
+
+export const addPostThunk = () => {
+	return (dispatch) => {
+		dispatch(addPostCreator());
+	}
+}
+
 export const updateNewPostTextCreator = (text) => ({
 	type: UPDATE_NEW_POST_TEXT,
 	newText: text,
 });
+
+export const updateNewPostTextThunk = (text) => {
+	return (dispatch) => {
+		dispatch(updateNewPostTextCreator(text));
+	}
+}
+
 export const setUserProfile = (profile) => ({
 	type: SET_USER_PROFILE,
 	profile,

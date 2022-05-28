@@ -20,13 +20,13 @@ const MyPosts = (props) => {
 
   let onAddPost = (e) => {
     e.preventDefault();
-    props.addPost();
+    props.addPostThunk();
   }
 
   let onPostChange = (e) => {
     e.preventDefault();
     let text = e.target.value;
-    props.updateNewPostText(text);
+    props.updateNewPostTextThunk(text);
   }
 
   return (
