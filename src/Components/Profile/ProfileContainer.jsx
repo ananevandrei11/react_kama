@@ -3,22 +3,26 @@ import { connect } from "react-redux";
 import Profile from "./Profile";
 import { setUserProfileByID } from "../../Redux/profileReducer";
 import { withRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class ProfileSubContainer extends React.Component {
-
   componentDidMount() {
     let userID = this.props.match.params.userID;
-    let userAuthID = (this.props.isAuth) ? this.props.userId : 2;
-    userID = (!userID) ? userAuthID : userID;
+    let userAuthID = this.props.isAuth ? this.props.userId : 2;
+    userID = !userID ? userAuthID : userID;
     this.props.setUserProfileByID(userID);
   }
 
   render() {
+    if (!this.props.isAuth) {
+      return <Redirect to="/login" />;
+    }
+
     return (
       <>
         <Profile {...this.props} profile={this.props.profile} />
       </>
-    )
+    );
   }
 }
 
@@ -31,7 +35,7 @@ let mapStateToProps = (state) => ({
 let WithUrlDataContainerComponent = withRouter(ProfileSubContainer);
 
 const ProfileContainer = connect(mapStateToProps, {
-  setUserProfileByID
+  setUserProfileByID,
 })(WithUrlDataContainerComponent);
 
 export default ProfileContainer;

@@ -13,6 +13,7 @@ import Music from "./Components/Music/Music";
 import UsersContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
+import Login from "./Components/Login/Login";
 
 const App = (props) => {
   return (
@@ -42,6 +43,10 @@ const App = (props) => {
 
           <Route path="/music">
             <Music />
+          </Route>
+
+          <Route path="/login">
+            <Login />
           </Route>
         </Switch>
       </main>

@@ -4,8 +4,13 @@ import DialogMessage from "./DialogMessage/DialogsMessage";
 import DialogUser from "./DialogUser/DialogsUser";
 import NewMessageContainer from "./NewMessage/NewMessageContainer";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 const Dialogs = (props) => {
+	if (!props.isAuth) {
+		return <Redirect to={'/login'}/>;
+	}
+	
 	return (
 		<div className={classes.dialogs}>
 			<aside className={classes.names}>
@@ -28,7 +33,8 @@ const Dialogs = (props) => {
 let mapStateToProps = (state) => {
 	return {
 		users: state.dialogPage.users,
-		messages: state.dialogPage.messages
+		messages: state.dialogPage.messages,
+		isAuth: state.auth.isAuth
 	}
 }
 

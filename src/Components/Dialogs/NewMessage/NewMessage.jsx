@@ -6,13 +6,13 @@ const NewMessage = (props) => {
 
   let onAddMessage = (e) => {
     e.preventDefault();
-    props.addMessage();
+    props.addMessageThunk();
   }
 
   let onPostChange = (e) => {
     e.preventDefault();
     let text = e.target.value;
-    props.updateNewMessageText(text);
+    props.updateNewMessageTextThunk(text);
   }
 
   return (
