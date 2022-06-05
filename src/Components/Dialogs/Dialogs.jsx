@@ -5,6 +5,7 @@ import DialogUser from "./DialogUser/DialogsUser";
 import NewMessageContainer from "./NewMessage/NewMessageContainer";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { AuthRedirect } from "../../HOC/AuthRedirect";
 
 const Dialogs = (props) => {
 	if (!props.isAuth) {
@@ -30,14 +31,15 @@ const Dialogs = (props) => {
 	);
 }
 
+let AuthRedirectComponent = AuthRedirect(Dialogs);
+
 let mapStateToProps = (state) => {
 	return {
 		users: state.dialogPage.users,
 		messages: state.dialogPage.messages,
-		isAuth: state.auth.isAuth
 	}
 }
 
-const DialogsContainer = connect(mapStateToProps)(Dialogs);
+const DialogsContainer = connect(mapStateToProps)(AuthRedirectComponent);
 
 export default DialogsContainer;
