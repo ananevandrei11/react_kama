@@ -9,6 +9,8 @@ import {
 } from "../../Redux/usersReducer";
 import Users from "./Users";
 import Preloder from "../Preloader/Preloader";
+import { compose } from "redux";
+import { withAuthRedirect } from "../../HOC/AuthRedirect";
 
 let mapStateToProps = (state) => {
   return {
@@ -53,12 +55,15 @@ class UsersSubContainer extends React.Component {
   }
 }
 
-const UsersContainer = connect(mapStateToProps, {
-  setCurrentPage,
-  setTotalUsersCount,
-  toggleIsFollowingInProgress,
-  getUsersThunk,
-  followChangeThunk,
-})(UsersSubContainer);
+const UsersContainer = compose(
+  connect(mapStateToProps, {
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleIsFollowingInProgress,
+    getUsersThunk,
+    followChangeThunk,
+  }),
+  withAuthRedirect,
+)(UsersSubContainer);
 
 export default UsersContainer;

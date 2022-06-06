@@ -5,7 +5,8 @@ import DialogUser from "./DialogUser/DialogsUser";
 import NewMessageContainer from "./NewMessage/NewMessageContainer";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { AuthRedirect } from "../../HOC/AuthRedirect";
+import { withAuthRedirect } from "../../HOC/AuthRedirect";
+import { compose } from "redux";
 
 const Dialogs = (props) => {
 	if (!props.isAuth) {
@@ -31,7 +32,7 @@ const Dialogs = (props) => {
 	);
 }
 
-let AuthRedirectComponent = AuthRedirect(Dialogs);
+//let AuthRedirectComponent = withAuthRedirect(Dialogs);
 
 let mapStateToProps = (state) => {
 	return {
@@ -40,6 +41,9 @@ let mapStateToProps = (state) => {
 	}
 }
 
-const DialogsContainer = connect(mapStateToProps)(AuthRedirectComponent);
+const DialogsContainer = compose(
+	connect(mapStateToProps),
+	withAuthRedirect
+)(Dialogs);
 
 export default DialogsContainer;
