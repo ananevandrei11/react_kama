@@ -33,7 +33,7 @@ const ProfileContainer = compose(
     setUserProfileByID,
   }),
   withRouter,
-  withAuthRedirect
+  //withAuthRedirect
 )(ProfileSubContainer);
 
 export default ProfileContainer;
