@@ -1,28 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import Friend from "./Friend/Friend";
-import classes from './FriendsBar.module.css';
+import classes from "./FriendsBar.module.css";
 
 const FriendsBar = (props) => {
-	return (
+  return (
     <section className={classes.friendsBar}>
-      {props.friends.map((friend) =>
-        <Friend
-          key={friend.id}
-          name={friend.name}
-          avatar={friend.avatar} />
-      )}
+      {props.friends.map((friend) => (
+        <Friend key={friend.id} name={friend.name} avatar={friend.avatar} />
+      ))}
     </section>
-  )
-}
-
+  );
+};
 
 let mapStateToProps = (state) => {
-	return {
-		friends: state.sideBar.friends,
-	}
-}
+  return {
+    friends: state.sideBar.friends,
+  };
+};
 
-const FriendsBarContainer = connect(mapStateToProps)(FriendsBar);
+const FriendsBarContainer = compose(connect(mapStateToProps))(FriendsBar);
 
 export default FriendsBarContainer;

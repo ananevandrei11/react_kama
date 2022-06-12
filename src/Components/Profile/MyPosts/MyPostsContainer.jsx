@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import {
   addPostThunk,
   updateNewPostTextThunk,
@@ -13,9 +14,11 @@ let mapStateToProps = (state) => {
   };
 };
 
-const MyPostsContainer = connect(mapStateToProps, {
-  addPostThunk,
-  updateNewPostTextThunk
-})(MyPosts);
+const MyPostsContainer = compose(
+  connect(mapStateToProps, {
+    addPostThunk,
+    updateNewPostTextThunk,
+  })
+)(MyPosts);
 
 export default MyPostsContainer;
