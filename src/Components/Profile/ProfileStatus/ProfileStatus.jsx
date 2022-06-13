@@ -1,42 +1,42 @@
 import React from "react";
+import classes from './ProfileStatus.module.css';
 
 class ProfileStatus extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			editMode: false,
-      status: this.props.status,
-		};
+    constructor(props) {
+        super(props);
+        this.state = {
+            editMode: false,
+            status: this.props.status,
+        };
+    }
 
-		this.toggleEditMode = this.toggleEditMode.bind(this);
-	}
+    toggleEditMode = (action) => {
+        debugger;
+        this.setState({
+            editMode: action
+        });
+    };
 
-	toggleEditMode = (action) => {
-		this.setState({
-			editMode: action
-		});
-	};
+    inputValue = (e) => {
+        this.setState({
+            status: e.currentTarget.value
+        });
+    };
 
-	inputValue = (e) => {
-		this.setState({
-			status: e.currentTarget.value
-		});
-	};
-
-	render() {
-		return (
-			<div>
+    render() {
+        return (
+            <div>
 				{!this.state.editMode ?
 					(<div>
-						<span onDoubleClick={() => this.toggleEditMode(true)}>
+						<span className={classes.btn} onDoubleClick={() => this.toggleEditMode(true)}>
 							{this.state.status}
 						</span>
 					</div>)
 					:
 					(<div>
 						<input
-							type="text"
 							name="status"
+							type="text"
 							id="status"
 							autoFocus
 							value={this.state.status}
@@ -45,8 +45,8 @@ class ProfileStatus extends React.Component {
 						/>
 					</div>)}
 			</div>
-		);
-	}
+        );
+    }
 }
 
 export default ProfileStatus;
