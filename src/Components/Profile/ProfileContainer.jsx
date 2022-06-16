@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import Profile from "./Profile";
-import { setUserProfileByID } from "../../Redux/profileReducer";
+import {
+  setUserProfileByID,
+  setStatusThunk,
+  updateStatusThunk,
+} from "../../Redux/profileReducer";
 import { withRouter } from "react-router-dom";
 import { withAuthRedirect } from "../../HOC/AuthRedirect";
 import { compose } from "redux";
@@ -12,6 +16,7 @@ class ProfileSubContainer extends React.Component {
     let userAuthID = this.props.isAuth ? this.props.userId : 2;
     userID = !userID ? userAuthID : userID;
     this.props.setUserProfileByID(userID);
+    this.props.setStatusThunk(userID);
   }
 
   render() {
@@ -25,15 +30,18 @@ class ProfileSubContainer extends React.Component {
 
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
+  status: state.profilePage.status,
   userId: state.auth.userId,
 });
 
 const ProfileContainer = compose(
   connect(mapStateToProps, {
     setUserProfileByID,
+    setStatusThunk,
+    updateStatusThunk,
   }),
   withRouter,
-  withAuthRedirect
+  // withAuthRedirect
 )(ProfileSubContainer);
 
 export default ProfileContainer;

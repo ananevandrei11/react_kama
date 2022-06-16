@@ -20,7 +20,7 @@ const ProfileInfo = (props) => {
     <div className={classes.profileInfo}>
       <section className={classes.profileInfo__description}>
         <img src={props.profile.photos.large} alt="" />
-        <ProfileStatus status={"hello freinds"} />
+        <ProfileStatus updateStatus={props.updateStatusThunk} status={props.status} />
         <p>{props.profile.fullName}</p>
         <p>About Me: {props.profile.aboutMe}</p>
         <ul>
