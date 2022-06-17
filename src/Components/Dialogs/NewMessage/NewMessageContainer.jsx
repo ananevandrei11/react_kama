@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import {
   addMessageThunk,
-  updateNewMessageTextThunk,
 } from "../../../Redux/dialogsReducer";
 import NewMessage from "./NewMessage";
 
@@ -31,7 +30,6 @@ let mapDispatchToProps = (dispatch) => {
 const NewMessageContainer = compose(
   connect(mapStateToProps, {
     addMessageThunk,
-    updateNewMessageTextThunk,
   })
 )(NewMessage);
 

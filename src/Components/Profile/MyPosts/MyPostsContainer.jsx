@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import {
   addPostThunk,
-  updateNewPostTextThunk,
 } from "../../../Redux/profileReducer";
 import MyPosts from "./MyPosts";
 
@@ -17,7 +16,6 @@ let mapStateToProps = (state) => {
 const MyPostsContainer = compose(
   connect(mapStateToProps, {
     addPostThunk,
-    updateNewPostTextThunk,
   })
 )(MyPosts);
 

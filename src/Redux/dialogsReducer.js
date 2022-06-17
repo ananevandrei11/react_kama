@@ -1,5 +1,4 @@
-const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
+const ADD_MESSAGE = 'ADD_MESSAGE';
 
 let initialState = {
 	users: [
@@ -26,20 +25,14 @@ let initialState = {
 const dialogsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_MESSAGE:
-			let newMessage = {
+			let newMessageSubmit = {
 				id: state.messages.length + 1,
-				text: state.newMessage
+				text: action.newMessage
 			};
 			return {
 				...state,
-				messages: [...state.messages, newMessage],
+				messages: [...state.messages, newMessageSubmit],
 				newMessage: 'New Message'
-			};
-
-		case UPDATE_NEW_MESSAGE_TEXT:
-			return {
-				...state,
-				newMessage: action.newMessage
 			};
 
 		default:
@@ -47,24 +40,14 @@ const dialogsReducer = (state = initialState, action) => {
 	}
 }
 
-export const addMessageCreator = () => ({
-	type: ADD_MESSAGE
-});
-
-export const addMessageThunk = () => {
-	return (dispatch) => {
-		dispatch(addMessageCreator());
-	}
-}
-
-export const updateNewMessageTextCreator = (text) => ({
-	type: UPDATE_NEW_MESSAGE_TEXT,
+export const addMessageCreator = (text) => ({
+	type: ADD_MESSAGE,
 	newMessage: text,
 });
 
-export const updateNewMessageTextThunk = (text) => {
+export const addMessageThunk = (text) => {
 	return (dispatch) => {
-		dispatch(updateNewMessageTextCreator(text));
+		dispatch(addMessageCreator(text));
 	}
 }
 

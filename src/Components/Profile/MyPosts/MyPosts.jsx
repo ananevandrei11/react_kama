@@ -1,13 +1,15 @@
 import React from "react";
 import Post from "./Post/Post";
-import classes from './MyPosts.module.css';
+import classes from "./MyPosts.module.css";
+import { useFormik } from "formik";
 
 const MyPosts = (props) => {
   let posts = props.posts;
-  let newPostText = props.newPostText;
 
-  let content = posts.map((post) =>
-    <Post key={post.id} idItem={`item-${post.id}`}
+  let content = posts.map((post) => (
+    <Post
+      key={post.id}
+      idItem={`item-${post.id}`}
       children={
         <>
           <h3>{"Post " + post.id}</h3>
@@ -16,33 +18,35 @@ const MyPosts = (props) => {
         </>
       }
     />
-  );
+  ));
 
-  let onAddPost = (e) => {
-    e.preventDefault();
-    props.addPostThunk();
-  }
-
-  let onPostChange = (e) => {
-    e.preventDefault();
-    let text = e.target.value;
-    props.updateNewPostTextThunk(text);
-  }
+  let formik = useFormik({
+    initialValues: {
+      newPostText: props.newPostText,
+    },
+    onSubmit: (values) => {
+      props.addPostThunk(values.newPostText);
+      formik.resetForm({
+        values: { newPostText: props.newPostText },
+      });
+    },
+  });
 
   return (
     <section className={classes.posts}>
       <h2 className={classes.title}>My Posts</h2>
-      <form className={classes.newpost}>
+      <form onSubmit={formik.handleSubmit} className={classes.newpost}>
         <textarea
           rows="5"
-          value={newPostText}
-          onChange={onPostChange}
+          value={formik.values.newPostText}
+          onChange={formik.handleChange}
+          name="newPostText"
         ></textarea>
-        <button onClick={onAddPost}>Add New Post</button>
+        <button>Add New Post</button>
       </form>
       {content}
     </section>
   );
-}
+};
 
 export default MyPosts;

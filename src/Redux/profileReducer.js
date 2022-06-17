@@ -2,8 +2,7 @@ import {
   profileAPI
 } from "../API/Api";
 
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE-NEW-POST-TEXT";
 const SET_STATUS = "SET_STATUS";
 
@@ -35,19 +34,13 @@ const profileReducer = (state = initialState, action) => {
   case ADD_POST:
     let newPost = {
       id: state.posts.length + 1,
-      message: state.newPostText,
+      message: action.newPostText,
       likesСount: 0,
     };
     return {
       ...state,
       posts: [...state.posts, newPost],
       newPostText: "New Post Text",
-    };
-
-  case UPDATE_NEW_POST_TEXT:
-    return {
-      ...state,
-      newPostText: action.newText,
     };
 
   case SET_USER_PROFILE:
@@ -67,24 +60,14 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const addPostCreator = () => ({
+export const addPostCreator = (text) => ({
   type: ADD_POST,
+  newPostText: text,
 });
 
-export const addPostThunk = () => {
+export const addPostThunk = (text) => {
   return (dispatch) => {
-    dispatch(addPostCreator());
-  };
-};
-
-export const updateNewPostTextCreator = (text) => ({
-  type: UPDATE_NEW_POST_TEXT,
-  newText: text,
-});
-
-export const updateNewPostTextThunk = (text) => {
-  return (dispatch) => {
-    dispatch(updateNewPostTextCreator(text));
+    dispatch(addPostCreator(text));
   };
 };
 

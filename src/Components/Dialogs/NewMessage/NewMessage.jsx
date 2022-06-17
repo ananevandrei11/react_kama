@@ -1,30 +1,32 @@
 import React from "react";
-import classes from './NewMessage.module.css';
+import classes from "./NewMessage.module.css";
+import { useFormik } from "formik";
 
 const NewMessage = (props) => {
-  let newMessage = props.newMessage;
 
-  let onAddMessage = (e) => {
-    e.preventDefault();
-    props.addMessageThunk();
-  }
-
-  let onPostChange = (e) => {
-    e.preventDefault();
-    let text = e.target.value;
-    props.updateNewMessageTextThunk(text);
-  }
+  let formik = useFormik({
+    initialValues: {
+      newMessageBody: props.newMessage,
+    },
+    onSubmit: (values) => {
+      props.addMessageThunk(values.newMessageBody);
+      formik.resetForm({
+        values: { newMessageBody: props.newMessage },
+      });
+    },
+  });
 
   return (
-    <form action="" className={classes.newMessage__form}>
+    <form onSubmit={formik.handleSubmit} className={classes.newMessage__form}>
       <textarea
         rows="10"
-        value={newMessage}
-        onChange={onPostChange}
+        onChange={formik.handleChange}
+        value={formik.values.newMessageBody}
+        name="newMessageBody"
       ></textarea>
-      <button onClick={onAddMessage}>Add New Message!!</button>
+      <button>Add New Message!!!</button>
     </form>
-  )
-}
+  );
+};
 
 export default NewMessage;
