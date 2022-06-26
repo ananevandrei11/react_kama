@@ -1,0 +1,47 @@
+.inputField {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.labelField {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: auto;
+  gap: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.inputText {
+  padding: 5px;
+  border: 1px solid #f4f4f4;
+  border-radius: 5px;
+  outline: none;
+}
+
+.checkboxLabel {
+  width: fit-content;
+  font-weight: 500;
+  cursor: pointer;
+}
+.inputField.error .inputText {
+  border-color: red;
+  border-width: 2px;
+}
+
+.labelField.error .checkboxLabel {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+
+.errorText,
+.errorCheckbox {
+  color: red;
+  font-weight: 700;
+}
+
+.errorCheckbox {
+  flex-basis: 100%;
+  grid-column: 1 / -1;
+}

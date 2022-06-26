@@ -1,13 +1,14 @@
 import { loginAPI } from "../API/Api";
 
 const SET_AUTH_USER_DATA = "SET_AUTH_USER_DATA";
-const TOGGLE_IS_AUTH = "TOGGLE_IS_AUTH";
+const TOGGLE_ERROR_LOGIN = "TOGGLE_ERROR_LOGIN";
 
 let initialState = {
   userId: null,
   email: null,
   login: null,
   isAuth: false,
+  errorLogin: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -18,10 +19,10 @@ const authReducer = (state = initialState, action) => {
         ...action.data,
       };
 
-    case TOGGLE_IS_AUTH:
+    case TOGGLE_ERROR_LOGIN:
       return {
         ...state,
-        isAuth: action.isAuth,
+        errorLogin: action.errorLogin,
       };
 
     default:
@@ -29,24 +30,25 @@ const authReducer = (state = initialState, action) => {
   }
 };
 
-export const setAuthUserData = (userId, login, email) => ({
+export const setAuthUserData = (userId, login, email, isAuth) => ({
   type: SET_AUTH_USER_DATA,
-  data: { userId, login, email },
+  data: { userId, login, email, isAuth },
 });
 
-export const toggleIsAuth = (isAuth) => ({
-  type: TOGGLE_IS_AUTH,
-  isAuth,
+export const setErrorLogin = (errorLogin) => ({
+  type: TOGGLE_ERROR_LOGIN,
+  errorLogin,
 });
+
 
 export const setAuthUser = () => {
   return (dispatch) => {
     loginAPI.checkLogin().then((data) => {
       if (data.resultCode === 0) {
-        dispatch(toggleIsAuth(true));
         let { id, login, email } = data.data;
-        dispatch(setAuthUserData(id, login, email));
+        dispatch(setAuthUserData(id, login, email, true));
       }
+      dispatch(setErrorLogin(null));
     });
   };
 };
@@ -55,7 +57,26 @@ export const authLoginThunk = (data) => {
   return (dispatch) => {
     loginAPI.authLogin(data).then((response) => {
       if (response.resultCode === 0) {
-        dispatch(toggleIsAuth(true));
+        dispatch(setAuthUserData(null, null, data.email, true));
+      } else {
+        dispatch(setErrorLogin(response.messages));
+      }
+    })
+
+    loginAPI.checkLogin().then((data) => {
+      if (data.resultCode === 0) {
+        let { id, login, email } = data.data;
+        dispatch(setAuthUserData(id, login, email, true));
+      }
+    });
+  };
+};
+
+export const logOutThunk = (data) => {
+  return (dispatch) => {
+    loginAPI.logOut().then((response) => {
+      if (response.resultCode === 0) {
+        dispatch(setAuthUserData(null, null, null, false));
       }
     })
   };

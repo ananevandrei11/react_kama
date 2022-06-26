@@ -13,6 +13,10 @@ export const withAuthRedirect = (Component) => {
       this.props.setAuthUser();
     }
 
+    componentDidUpdate() {
+      this.props.setAuthUser();
+    }
+
     render() {
       if (!this.props.isAuth) {
         return <Redirect to="/login" />;

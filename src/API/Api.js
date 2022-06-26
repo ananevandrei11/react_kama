@@ -38,6 +38,25 @@ export const loginAPI = {
   },
 
   authLogin(data) {
+    return instance.post('auth/login', {
+      email: data.email,
+      password: data.password,
+      rememberMe: data.rememberMe,
+      captcha: true
+    }).then((response) => {
+      return response.data;
+    })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+
+  logOut() {
+    return instance.delete('auth/login');
+  }
+
+  /*
+  authLogin(data) {
     return axios({
       method: "post",
       url: "https://social-network.samuraijs.com/api/1.0/auth/login",
@@ -58,6 +77,7 @@ export const loginAPI = {
         console.log(error);
       });
   },
+  */
 };
 
 export const profileAPI = {

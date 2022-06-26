@@ -41,7 +41,7 @@ const ProfileContainer = compose(
     updateStatusThunk,
   }),
   withRouter,
-  // withAuthRedirect
+  //withAuthRedirect
 )(ProfileSubContainer);
 
 export default ProfileContainer;

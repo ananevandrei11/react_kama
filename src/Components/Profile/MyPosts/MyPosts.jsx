@@ -1,7 +1,10 @@
 import React from "react";
 import Post from "./Post/Post";
 import classes from "./MyPosts.module.css";
-import { useFormik } from "formik";
+import { Formik, Form } from "formik";
+import * as Yup from 'yup';
+import {textLengthAndRequired} from '../../../Utils/Validators/Validators';
+import { InputText } from "../../Common/FormControls/FormsControls";
 
 const MyPosts = (props) => {
   let posts = props.posts;
@@ -20,30 +23,34 @@ const MyPosts = (props) => {
     />
   ));
 
-  let formik = useFormik({
-    initialValues: {
-      newPostText: props.newPostText,
-    },
-    onSubmit: (values) => {
-      props.addPostThunk(values.newPostText);
-      formik.resetForm({
-        values: { newPostText: props.newPostText },
-      });
-    },
-  });
-
   return (
     <section className={classes.posts}>
       <h2 className={classes.title}>My Posts</h2>
-      <form onSubmit={formik.handleSubmit} className={classes.newpost}>
-        <textarea
-          rows="5"
-          value={formik.values.newPostText}
-          onChange={formik.handleChange}
-          name="newPostText"
-        ></textarea>
-        <button>Add New Post</button>
-      </form>
+      <Formik
+        initialValues={{
+          newPostText: props.newPostText,
+        }}
+        validationSchema={
+          Yup.object().shape({
+            newPostText: textLengthAndRequired(50)
+          })
+        }
+        onSubmit={(values, { resetForm }) => {
+          props.addPostThunk(values.newPostText);
+          resetForm({
+            values: { newPostText: props.newPostText },
+          });
+        }}
+      >
+        <Form className={classes.newpost}>
+          <InputText 
+            rows="5"
+            name="newPostText"
+            as="textarea"
+          />
+          <button>Add New Post</button>
+        </Form>
+      </Formik>
       {content}
     </section>
   );
