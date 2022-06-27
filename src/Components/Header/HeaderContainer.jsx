@@ -5,10 +5,6 @@ import { setAuthUser, logOutThunk } from "../../Redux/authReducer";
 import { compose } from "redux";
 
 class HeaderSubContainer extends React.Component {
-  componentDidMount() {
-    this.props.setAuthUser();
-  }
-
   render() {
     return (
       <>
@@ -21,11 +17,11 @@ class HeaderSubContainer extends React.Component {
 let mapStateToProps = (state) => {
   return {
     isAuth: state.auth.isAuth,
-    login: state.auth.login
+    login: state.auth.login,
   };
 };
 
-const HeaderContainer = compose(connect(mapStateToProps, { setAuthUser, logOutThunk }))(
+const HeaderContainer = connect(mapStateToProps, { logOutThunk })(
   HeaderSubContainer
 );
 

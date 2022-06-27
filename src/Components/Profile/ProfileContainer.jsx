@@ -7,7 +7,6 @@ import {
   updateStatusThunk,
 } from "../../Redux/profileReducer";
 import { withRouter } from "react-router-dom";
-import { withAuthRedirect } from "../../HOC/AuthRedirect";
 import { compose } from "redux";
 
 class ProfileSubContainer extends React.Component {
@@ -41,7 +40,6 @@ const ProfileContainer = compose(
     updateStatusThunk,
   }),
   withRouter,
-  //withAuthRedirect
 )(ProfileSubContainer);
 
 export default ProfileContainer;

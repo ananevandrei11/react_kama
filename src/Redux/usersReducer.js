@@ -10,7 +10,7 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 
 let initialState = {
 	users: [],
-	countPage: 5,
+	pageSize: 5,
 	totalUsersCount: 0,
 	currentPage: 1,
 	isFetching: true,
@@ -123,10 +123,11 @@ export const toggleIsFollowingInProgress = (isFetching, userID) => ({
 });
 
 // This is thunk
-export const getUsersThunk = (currentPage, countPage) => {
+export const getUsersThunk = (currentPage, pageSize) => {
 	return (dispatch) => {
 		dispatch(toggleIsFetching(true));
-		userAPI.getUsers(currentPage, countPage).then(data => {
+		
+		userAPI.getUsers(currentPage, pageSize).then(data => {
 			dispatch(toggleIsFetching(false));
 			dispatch(setUsers(data.items));
 			if (currentPage <= 1) {

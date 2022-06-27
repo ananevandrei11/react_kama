@@ -4,7 +4,7 @@ import userNoAvatar from "../../Asets/images/noavatar.svg";
 import classes from './Users.module.css';
 
 const Users = (props) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.countPage);
+  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
   
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {

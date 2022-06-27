@@ -41,16 +41,14 @@ export const setErrorLogin = (errorLogin) => ({
 });
 
 
-export const setAuthUser = () => {
-  return (dispatch) => {
-    loginAPI.checkLogin().then((data) => {
-      if (data.resultCode === 0) {
-        let { id, login, email } = data.data;
-        dispatch(setAuthUserData(id, login, email, true));
-      }
-      dispatch(setErrorLogin(null));
-    });
-  };
+export const setAuthUser = () => (dispatch) => {
+  return loginAPI.checkLogin().then((data) => {
+    if (data.resultCode === 0) {
+      let { id, login, email } = data.data;
+      dispatch(setAuthUserData(id, login, email, true));
+    }
+    dispatch(setErrorLogin(null));
+  });
 };
 
 export const authLoginThunk = (data) => {

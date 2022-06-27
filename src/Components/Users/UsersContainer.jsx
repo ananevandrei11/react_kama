@@ -11,17 +11,33 @@ import Users from "./Users";
 import Preloder from "../Preloader/Preloader";
 import { compose } from "redux";
 import { withAuthRedirect } from "../../HOC/AuthRedirect";
+import {
+  getPageSize,
+  getUsers,
+  getTotalUsersCount,
+  getCurrentPage,
+  getIsFetching,
+  getIsFollowingInProgress,
+} from "../../Redux/usersSelectorReducer";
 
-let mapStateToProps = (state) => {
-  return {
-    users: state.userPage.users,
-    countPage: state.userPage.countPage,
-    totalUsersCount: state.userPage.totalUsersCount,
-    currentPage: state.userPage.currentPage,
-    isFetching: state.userPage.isFetching,
-    isFollowingInProgress: state.userPage.isFollowingInProgress,
-  };
-};
+// let mapStateToProps = (state) => {
+//   return {
+//     users: state.userPage.users,
+//     pageSize: state.userPage.pageSize,
+//     totalUsersCount: state.userPage.totalUsersCount,
+//     currentPage: state.userPage.currentPage,
+//     isFetching: state.userPage.isFetching,
+//     isFollowingInProgress: state.userPage.isFollowingInProgress,
+//   };
+// };
+let mapStateToProps = (state) => ({
+  users: getUsers(state),
+  pageSize: getPageSize(state),
+  totalUsersCount: getTotalUsersCount(state),
+  currentPage: getCurrentPage(state),
+  isFetching: getIsFetching(state),
+  isFollowingInProgress: getIsFollowingInProgress(state),
+});
 
 class UsersSubContainer extends React.Component {
   constructor(props) {
@@ -30,11 +46,11 @@ class UsersSubContainer extends React.Component {
   }
 
   onPageChanged = (pageNumber) => {
-    this.props.getUsersThunk(pageNumber, this.props.countPage);
+    this.props.getUsersThunk(pageNumber, this.props.pageSize);
   };
 
   componentDidMount() {
-    this.props.getUsersThunk(this.props.currentPage, this.props.countPage);
+    this.props.getUsersThunk(this.props.currentPage, this.props.pageSize);
   }
 
   render() {
@@ -43,7 +59,7 @@ class UsersSubContainer extends React.Component {
         {this.props.isFetching ? <Preloder /> : null}
         <Users
           totalUsersCount={this.props.totalUsersCount}
-          countPage={this.props.countPage}
+          pageSize={this.props.pageSize}
           currentPage={this.props.currentPage}
           onPageChanged={this.onPageChanged}
           users={this.props.users}
@@ -63,7 +79,7 @@ const UsersContainer = compose(
     getUsersThunk,
     followChangeThunk,
   }),
-  withAuthRedirect,
+  // withAuthRedirect,
 )(UsersSubContainer);
 
 export default UsersContainer;
