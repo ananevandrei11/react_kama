@@ -3,6 +3,7 @@ import {
 } from "../API/Api";
 
 const ADD_POST = "ADD_POST";
+const DELETE_POST = "DELETE_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE-NEW-POST-TEXT";
 const SET_STATUS = "SET_STATUS";
 
@@ -23,7 +24,7 @@ let initialState = {
     id: 4,
     message: "I`m fourth Post!",
     likesСount: 2,
-  }, ],
+  },],
   profile: null,
   newPostText: "New Post Text",
   status: "",
@@ -31,32 +32,38 @@ let initialState = {
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-  case ADD_POST:
-    let newPost = {
-      id: state.posts.length + 1,
-      message: action.newPostText,
-      likesСount: 0,
-    };
-    return {
-      ...state,
-      posts: [...state.posts, newPost],
-      newPostText: "New Post Text",
-    };
+    case ADD_POST:
+      let newPost = {
+        id: state.posts.length + 1,
+        message: action.newPostText,
+        likesСount: 0,
+      };
+      return {
+        ...state,
+        posts: [...state.posts, newPost],
+        newPostText: "New Post Text",
+      };
 
-  case SET_USER_PROFILE:
-    return {
-      ...state,
-      profile: action.profile,
-    };
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(p => p.id !== action.postID),
+      };
 
-  case SET_STATUS:
-    return {
-      ...state,
-      status: action.status,
-    };
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        profile: action.profile,
+      };
 
-  default:
-    return state;
+    case SET_STATUS:
+      return {
+        ...state,
+        status: action.status,
+      };
+
+    default:
+      return state;
   }
 };
 
@@ -70,6 +77,11 @@ export const addPostThunk = (text) => {
     dispatch(addPostCreator(text));
   };
 };
+
+export const deletePostCreator = (postID) => ({
+  type: DELETE_POST,
+  postID,
+});
 
 export const setUserProfile = (profile) => ({
   type: SET_USER_PROFILE,

@@ -73,7 +73,7 @@ export const authLoginThunk = (data) => {
 export const logOutThunk = (data) => {
   return (dispatch) => {
     loginAPI.logOut().then((response) => {
-      if (response.resultCode === 0) {
+      if (response.data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false));
       }
     })

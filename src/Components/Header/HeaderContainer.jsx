@@ -1,18 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Header from "./Header";
-import { setAuthUser, logOutThunk } from "../../Redux/authReducer";
-import { compose } from "redux";
+import { logOutThunk } from "../../Redux/authReducer";
 
-class HeaderSubContainer extends React.Component {
-  render() {
-    return (
-      <>
-        <Header {...this.props} />
-      </>
-    );
-  }
-}
+const HeaderSubContainer = (props) => {
+  return (
+    <>
+      <Header {...props} />
+    </>
+  );
+};
 
 let mapStateToProps = (state) => {
   return {

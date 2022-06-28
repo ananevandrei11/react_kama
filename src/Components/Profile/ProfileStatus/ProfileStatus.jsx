@@ -1,6 +1,8 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import classes from "./ProfileStatus.module.css";
 
+/*
 class ProfileStatus extends React.Component {
   constructor(props) {
     super(props);
@@ -68,5 +70,53 @@ class ProfileStatus extends React.Component {
     );
   }
 }
+*/
 
-export default ProfileStatus;
+const ProfileStatusHooks = (props) => {
+  const [editMode, setEditMode] = useState(false);
+  const [status, setStatus] = useState(props.status);
+
+  const toggleEditMode = (action) => {
+    setEditMode(action);
+    if (action === false) {
+      props.updateStatus(status);
+    }
+  };
+  const inputValue = (e) => {
+    setStatus(e.currentTarget.value);
+  };
+
+  useEffect(() => {
+    setStatus(props.status);
+  }, [props.status]);
+
+  return (
+    <div>
+      {!editMode && (
+        <div>
+          <span
+            onDoubleClick={() => toggleEditMode(true)}
+            className={classes.btn}
+          >
+            {props.status || "no status"}
+          </span>
+        </div>
+      )}
+      {editMode && (
+        <div>
+          <input
+            name="status"
+            type="text"
+            id="status"
+            value={status || ""}
+            autoFocus
+            onChange={(e) => inputValue(e)}
+            onBlur={() => toggleEditMode(false)}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ProfileStatusHooks;

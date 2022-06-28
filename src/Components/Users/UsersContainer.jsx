@@ -20,16 +20,6 @@ import {
   getIsFollowingInProgress,
 } from "../../Redux/usersSelectorReducer";
 
-// let mapStateToProps = (state) => {
-//   return {
-//     users: state.userPage.users,
-//     pageSize: state.userPage.pageSize,
-//     totalUsersCount: state.userPage.totalUsersCount,
-//     currentPage: state.userPage.currentPage,
-//     isFetching: state.userPage.isFetching,
-//     isFollowingInProgress: state.userPage.isFollowingInProgress,
-//   };
-// };
 let mapStateToProps = (state) => ({
   users: getUsers(state),
   pageSize: getPageSize(state),
