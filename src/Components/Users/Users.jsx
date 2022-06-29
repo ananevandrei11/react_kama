@@ -1,81 +1,37 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import userNoAvatar from "../../Asets/images/noavatar.svg";
-import classes from './Users.module.css';
+import Paginator from "../Common/Paginator/Paginator";
+import User from "./User/User";
+import cls from "./Users.module.css";
 
-const Users = (props) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-  
-  let pages = [];
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i);
-  }
-
+const Users = ({
+  users,
+  followChange,
+  isFollowingInProgress,
+  currentPage,
+  totalUsersCount,
+  pageSize,
+  onPageChanged,
+}) => {
   return (
     <div>
-      <div className={classes.pages}>
-        {
-          pages.map((page, index) =>
-            <span
-              key={index}
-              className={(
-                (props.currentPage === page) ? 
-                classes.selectedPage : '') + ' ' + classes.numPage}
-              onClick={() => { props.onPageChanged(page) }}
-            >{page}</span>
-          )
-        }
+      <Paginator
+        currentPage={currentPage}
+        totalUsersCount={totalUsersCount}
+        pageSize={pageSize}
+        onPageChanged={onPageChanged}
+      />
+      <div className={cls.users}>
+        {users.map((user) => (
+          <User
+            key={user.id}
+            user={user}
+            followChange={followChange}
+            isFollowingInProgress={isFollowingInProgress}
+          />
+        ))}
       </div>
-      {
-        props.users.map((user) =>
-          <article key={user.id.toString()}>
-            <div>
-              <figure>
-                <NavLink to={"/profile/" + user.id}>
-                  <img
-                    width="40"
-                    height="40"
-                    src={
-                      (user.photos.small != null) ? 
-                        user.photos.small : userNoAvatar
-                    }
-                    alt=" "
-                    style={{ backgroundColor: "#fff" }}
-                  />
-                </NavLink>
-              </figure>
-              {user.followed
-                ?
-                <button
-                  onClick={() => {
-                    props.followChange(user.id, 'unfollow');
-                  }}
-                  disabled={
-                    props.isFollowingInProgress.some(id => id === user.id)
-                  }
-                >Follow</button>
-                :
-                <button
-                  onClick={() => {
-                    props.followChange(user.id, 'follow');
-                  }}
-                  disabled={
-                    props.isFollowingInProgress.some(id => id === user.id)
-                  }
-                >Unfollow</button>
-              }
-            </div>
-            <div>
-              <p>{user.name}</p>
-              <p>{user.status}</p>
-              <p>{"user.location.country"}</p>
-              <p>{"user.location.city"}</p>
-            </div>
-          </article>
-        )
-      }
     </div>
-  )
+  );
 };
 
 export default Users;

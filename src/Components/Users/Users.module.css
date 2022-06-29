@@ -1,26 +1,16 @@
-.pages {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.users {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
-.numPage {
-  min-width: 20px;
-  height: 20px;
-  padding: 5px;
-  text-align: center;
-  border-radius: 50%;
-  background-color: #deb887;
-  font-size: 14px;
-  line-height: 20px;
-  cursor: pointer;
+@media (max-width: 1024px) {
+  .users {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.selectedPage {
-  background-color: brown;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: not-allowed;
+@media (max-width: 480px) {
+  .users {
+    grid-template-columns: 1fr;
+  }
 }

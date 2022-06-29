@@ -10,7 +10,6 @@ import {
 import Users from "./Users";
 import Preloder from "../Preloader/Preloader";
 import { compose } from "redux";
-import { withAuthRedirect } from "../../HOC/AuthRedirect";
 import {
   getPageSize,
   getUsers,
@@ -69,7 +68,6 @@ const UsersContainer = compose(
     getUsersThunk,
     followChangeThunk,
   }),
-  // withAuthRedirect,
 )(UsersSubContainer);
 
 export default UsersContainer;

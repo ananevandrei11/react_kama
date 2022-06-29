@@ -45,10 +45,8 @@ export const addMessageCreator = (text) => ({
 	newMessage: text,
 });
 
-export const addMessageThunk = (text) => {
-	return (dispatch) => {
-		dispatch(addMessageCreator(text));
-	}
+export const addMessageThunk = (text) => (dispatch) => {
+	dispatch(addMessageCreator(text));
 }
 
 export default dialogsReducer;

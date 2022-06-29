@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import { authLoginThunk } from "../../Redux/authReducer";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { InputCheckbox, InputText } from "../Common/FormControls/FormsControls";
 import {
@@ -26,7 +25,7 @@ const Login = (props) => {
   );
 };
 
-const LoginForm = (props) => {
+const LoginForm = ({ errorLogin, authLoginThunk }) => {
   return (
     <Formik
       initialValues={{
@@ -40,7 +39,7 @@ const LoginForm = (props) => {
         rememberMe: checkboxRequired("It is required True!"),
       })}
       onSubmit={async (values) => {
-        await props.authLoginThunk(values);
+        await authLoginThunk(values);
       }}
     >
       {({ validateForm, isSubmitting }) => (
@@ -60,7 +59,7 @@ const LoginForm = (props) => {
               LOG IN
             </button>
             <div className={cls.errorLogin}>
-              {props.errorLogin ? <div>{props.errorLogin}</div> : null}
+              {errorLogin ? <div>{errorLogin}</div> : null}
             </div>
           </div>
         </Form>

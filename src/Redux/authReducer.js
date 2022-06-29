@@ -1,7 +1,7 @@
 import { loginAPI } from "../API/Api";
 
-const SET_AUTH_USER_DATA = "SET_AUTH_USER_DATA";
-const TOGGLE_ERROR_LOGIN = "TOGGLE_ERROR_LOGIN";
+const SET_AUTH_USER_DATA = "network/auth/SET_AUTH_USER_DATA";
+const TOGGLE_ERROR_LOGIN = "network/auth/TOGGLE_ERROR_LOGIN";
 
 let initialState = {
   userId: null,
@@ -40,44 +40,36 @@ export const setErrorLogin = (errorLogin) => ({
   errorLogin,
 });
 
+export const setAuthUser = () => async (dispatch) => {
+  let response = await loginAPI.checkLogin();
 
-export const setAuthUser = () => (dispatch) => {
-  return loginAPI.checkLogin().then((data) => {
-    if (data.resultCode === 0) {
-      let { id, login, email } = data.data;
+  if (response.resultCode === 0) {
+    let { id, login, email } = response.data;
+    dispatch(setAuthUserData(id, login, email, true));
+  }
+  dispatch(setErrorLogin(null));
+};
+
+export const authLoginThunk = (data) => async (dispatch) => {
+  let login = await loginAPI.authLogin(data);
+  if (login.resultCode === 0) {
+    dispatch(setAuthUserData(login.data.userId, null, data.email, true));
+
+    let loginCheck = await loginAPI.checkLogin();
+    if (loginCheck.resultCode === 0) {
+      let { id, login, email } = loginCheck.data;
       dispatch(setAuthUserData(id, login, email, true));
     }
-    dispatch(setErrorLogin(null));
-  });
+  } else {
+    dispatch(setErrorLogin(login.messages));
+  }
 };
 
-export const authLoginThunk = (data) => {
-  return (dispatch) => {
-    loginAPI.authLogin(data).then((response) => {
-      if (response.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, data.email, true));
-      } else {
-        dispatch(setErrorLogin(response.messages));
-      }
-    })
-
-    loginAPI.checkLogin().then((data) => {
-      if (data.resultCode === 0) {
-        let { id, login, email } = data.data;
-        dispatch(setAuthUserData(id, login, email, true));
-      }
-    });
-  };
-};
-
-export const logOutThunk = (data) => {
-  return (dispatch) => {
-    loginAPI.logOut().then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(setAuthUserData(null, null, null, false));
-      }
-    })
-  };
+export const logOutThunk = (data) => async (dispatch) => {
+  let logout = await loginAPI.logOut();
+  if (logout.data.resultCode === 0) {
+    dispatch(setAuthUserData(null, null, null, false));
+  }
 };
 
 export default authReducer;
