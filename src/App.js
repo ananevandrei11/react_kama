@@ -1,24 +1,31 @@
 import React from "react";
-import {
-  Switch,
-  Route,
-  withRouter
-} from "react-router-dom";
-import './App.css';
-import Nav from './Components/Nav/Nav';
+import { Switch, Route, withRouter } from "react-router-dom";
+import "./App.css";
+import Nav from "./Components/Nav/Nav";
 import FriendsBar from "./Components/FriendsBar/FriendsBar";
-import Footer from './Components/Footer/Footer';
-import DialogsContainer from './Components/Dialogs/Dialogs';
+import Footer from "./Components/Footer/Footer";
 import News from "./Components/News/News";
 import Music from "./Components/Music/Music";
-import UsersContainer from "./Components/Users/UsersContainer";
-import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
-import Login from "./Components/Login/Login";
 import { initializeApp } from "./Redux/appReducer";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import Preloder from "./Components/Preloader/Preloader";
+import { withSuspense } from "./HOC/WithSuspense";
+
+const DialogsContainer = React.lazy(() =>
+  import("./Components/Dialogs/Dialogs")
+);
+
+const ProfileContainer = React.lazy(() =>
+  import("./Components/Profile/ProfileContainer")
+);
+
+const UsersContainer = React.lazy(() =>
+  import("./Components/Users/UsersContainer")
+);
+
+const Login = React.lazy(() => import("./Components/Login/Login"));
 
 class App extends React.Component {
   componentDidMount() {
@@ -27,7 +34,7 @@ class App extends React.Component {
 
   render() {
     if (!this.props.initialized) {
-      return <Preloder />
+      return <Preloder />;
     }
 
     return (
@@ -39,17 +46,14 @@ class App extends React.Component {
         </aside>
         <main className="app-wrapper-content">
           <Switch>
-            <Route path="/dialogs">
-              <DialogsContainer />
-            </Route>
+            <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
 
-            <Route path="/profile/:userID?">
-              <ProfileContainer />
-            </Route>
+            <Route
+              path="/profile/:userID?"
+              render={withSuspense(ProfileContainer)}
+            />
 
-            <Route path="/users">
-              <UsersContainer />
-            </Route>
+            <Route path="/users" render={withSuspense(UsersContainer)} />
 
             <Route path="/news">
               <News />
@@ -59,9 +63,7 @@ class App extends React.Component {
               <Music />
             </Route>
 
-            <Route path="/login">
-              <Login />
-            </Route>
+            <Route path="/login" render={withSuspense(Login)} />
           </Switch>
         </main>
         <Footer />
@@ -71,10 +73,10 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  initialized: state.app.initialized
-})
+  initialized: state.app.initialized,
+});
 
 export default compose(
   withRouter,
   connect(mapStateToProps, { initializeApp })
- )(App);
+)(App);

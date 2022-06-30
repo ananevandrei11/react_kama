@@ -8,7 +8,7 @@ import { InputText } from "../../Common/FormControls/FormsControls";
 
 const MyPosts = (props) => {
   let posts = props.posts;
-  console.log('render');
+
   let content = posts.map((post) => (
     <Post
       key={post.id}

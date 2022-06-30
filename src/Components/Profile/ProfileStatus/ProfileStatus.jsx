@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import classes from "./ProfileStatus.module.css";
-
+import TestRenderer from 'react-test-renderer';
 /*
 class ProfileStatus extends React.Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class ProfileStatus extends React.Component {
 }
 */
 
-const ProfileStatusHooks = (props) => {
+const ProfileStatus = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [status, setStatus] = useState(props.status);
 
@@ -119,4 +119,4 @@ const ProfileStatusHooks = (props) => {
   );
 };
 
-export default ProfileStatusHooks;
+export default ProfileStatus;

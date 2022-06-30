@@ -2,10 +2,12 @@ import React from "react";
 import Preloder from "../../Preloader/Preloader";
 import ProfileStatus from "../ProfileStatus/ProfileStatus";
 import classes from "./ProfileInfo.module.css";
+import userNoAvatar from "../../../Asets/images/noavatar.svg";
 
 const ProfileInfo = (props) => {
-
   let contactsUser = [];
+  let imgProfile;
+
   if (!props.profile) {
     return <Preloder />;
   } else {
@@ -14,30 +16,52 @@ const ProfileInfo = (props) => {
         contactsUser.push(props.profile.contacts[key]);
       }
     }
+    imgProfile = props.profile.photos.large;
   }
+
+  const onMainPhotoSelected = (e) => {
+    props.savePhotoTHunk(e.target.files[0]);
+  };
 
   return (
     <div className={classes.profileInfo}>
       <section className={classes.profileInfo__description}>
-        <img src={props.profile.photos.large} alt="" />
-        <ProfileStatus updateStatus={props.updateStatusThunk} status={props.status} />
+        <img
+          className={classes.imgProfile}
+          src={imgProfile !== null ? imgProfile : userNoAvatar}
+          alt=""
+        />
+        {props.isOwner ? (
+          <input type="file" onChange={onMainPhotoSelected} />
+        ) : null}
+        <ProfileStatus
+          updateStatus={props.updateStatusThunk}
+          status={props.status}
+        />
         <p>{props.profile.fullName}</p>
         <p>About Me: {props.profile.aboutMe}</p>
-        <ul>
+        <div>
           {contactsUser.map((site, index) => (
-            <li key={index}>
-              <a href={site} target="_blank" rel="noreferrer">
-                {site}
-              </a>
-            </li>
+            <ContactsUser key={index} site={site}/>
           ))}
-        </ul>
+        </div>
         {props.profile.lookingForAJob ? (
           <p>Поиск работы: {props.profile.lookingForAJobDescription}</p>
         ) : (
           <p>Не ищу работу!!!</p>
         )}
       </section>
+    </div>
+  );
+};
+
+const ContactsUser = ({ site }) => {
+  console.log(site);
+  return (
+    <div>
+      <a href={site} target="_blank" rel="noreferrer">
+        {site}
+      </a>
     </div>
   );
 };

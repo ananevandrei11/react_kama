@@ -16,9 +16,10 @@ const Users = ({
     <div>
       <Paginator
         currentPage={currentPage}
-        totalUsersCount={totalUsersCount}
+        totalItemsCount={totalUsersCount}
         pageSize={pageSize}
         onPageChanged={onPageChanged}
+        portionSize={10}
       />
       <div className={cls.users}>
         {users.map((user) => (
