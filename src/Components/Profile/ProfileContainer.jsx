@@ -5,7 +5,8 @@ import {
   setUserProfileByID,
   setStatusThunk,
   updateStatusThunk,
-  savePhotoTHunk
+  savePhotoTHunk,
+  saveProfileThunk
 } from "../../Redux/profileReducer";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
@@ -32,7 +33,7 @@ class ProfileSubContainer extends React.Component {
   render() {
     return (
       <>
-        <Profile isOwner={!this.props.match.params.userID} {...this.props} profile={this.props.profile} />
+        <Profile isOwner={!this.props.match.params.userID} profile={this.props.profile} {...this.props} />
       </>
     );
   }
@@ -51,6 +52,7 @@ const ProfileContainer = compose(
     setStatusThunk,
     updateStatusThunk,
     savePhotoTHunk,
+    saveProfileThunk
   }),
   withRouter,
 )(ProfileSubContainer);

@@ -108,4 +108,12 @@ export const profileAPI = {
       }
     });
   },
+
+  saveProfile(values) {
+    return instance.put(`profile`, values, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  }
 };
