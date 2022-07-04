@@ -1,7 +1,8 @@
-import { loginAPI } from "../API/Api";
+import { loginAPI, securityAPI } from "../API/Api";
 
 const SET_AUTH_USER_DATA = "network/auth/SET_AUTH_USER_DATA";
 const TOGGLE_ERROR_LOGIN = "network/auth/TOGGLE_ERROR_LOGIN";
+const GET_CAPTCHA_URL_SUCCES = "network/auth/GET_CAPTCHA_URL_SUCCES";
 
 let initialState = {
   userId: null,
@@ -9,6 +10,7 @@ let initialState = {
   login: null,
   isAuth: false,
   errorLogin: null,
+  captcha: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -23,6 +25,12 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         errorLogin: action.errorLogin,
+      };
+
+    case GET_CAPTCHA_URL_SUCCES:
+      return {
+        ...state,
+        captcha: action.payload,
       };
 
     default:
@@ -40,6 +48,11 @@ export const setErrorLogin = (errorLogin) => ({
   errorLogin,
 });
 
+export const getCaptchaUrlSucces = (captcha) => ({
+  type: GET_CAPTCHA_URL_SUCCES,
+  payload: { captcha },
+});
+
 export const setAuthUser = () => async (dispatch) => {
   let response = await loginAPI.checkLogin();
 
@@ -48,6 +61,11 @@ export const setAuthUser = () => async (dispatch) => {
     dispatch(setAuthUserData(id, login, email, true));
   }
   dispatch(setErrorLogin(null));
+};
+
+export const getCaptchaUrlThunk = () => async (dispatch) => {
+  let captcha = await securityAPI.getCaptchaUrl();
+  dispatch(getCaptchaUrlSucces(captcha.url));
 };
 
 export const authLoginThunk = (data) => async (dispatch) => {
@@ -61,6 +79,9 @@ export const authLoginThunk = (data) => async (dispatch) => {
       dispatch(setAuthUserData(id, login, email, true));
     }
   } else {
+    if (login.resultCode === 10) {
+      dispatch(getCaptchaUrlThunk());
+    }
     dispatch(setErrorLogin(login.messages));
   }
 };

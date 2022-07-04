@@ -25,20 +25,29 @@ const Login = (props) => {
   );
 };
 
-const LoginForm = ({ errorLogin, authLoginThunk }) => {
+const LoginForm = ({
+  errorLogin,
+  captcha,
+  authLoginThunk,
+}) => {
+  //getCaptchaUrlThunk();
+  console.log(captcha);
   return (
     <Formik
       initialValues={{
         email: "",
         password: "",
         rememberMe: false,
+        captcha: "true",
       }}
       validationSchema={Yup.object().shape({
         password: textLengthAndRequired(20),
         email: emailRequired(),
         rememberMe: checkboxRequired("It is required True!"),
+        captcha: Yup.string().required('It is required.'),
       })}
       onSubmit={async (values) => {
+        console.log(values);
         await authLoginThunk(values);
       }}
     >
@@ -49,6 +58,12 @@ const LoginForm = ({ errorLogin, authLoginThunk }) => {
           <InputCheckbox name="rememberMe" type="checkbox" id="rememberMe">
             Remember Me
           </InputCheckbox>
+          {captcha && (
+            <>
+              <InputText name="captcha" type="text" placeholder="Captcha" />
+              <img src={captcha.captcha} alt="captcha" />
+            </>
+          )}
           <div>
             <button
               type="submit"
@@ -71,8 +86,11 @@ const LoginForm = ({ errorLogin, authLoginThunk }) => {
 let mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
   errorLogin: state.auth.errorLogin,
+  captcha: state.auth.captcha,
 });
 
-const LoginFormRedux = connect(mapStateToProps, { authLoginThunk })(Login);
+const LoginFormRedux = connect(mapStateToProps, {
+  authLoginThunk,
+})(Login);
 
 export default LoginFormRedux;

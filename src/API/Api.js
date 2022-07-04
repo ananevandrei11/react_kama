@@ -42,7 +42,7 @@ export const loginAPI = {
       email: data.email,
       password: data.password,
       rememberMe: data.rememberMe,
-      captcha: true
+      captcha: data.captcha
     }).then((response) => {
       return response.data;
     })
@@ -79,6 +79,14 @@ export const loginAPI = {
   },
   */
 };
+
+export const securityAPI = {
+  getCaptchaUrl() {
+    return instance.get(`/security/get-captcha-url`).then((response) => {
+      return response.data;
+    });
+  }
+}
 
 export const profileAPI = {
   setUserIDforProfile(userID) {
