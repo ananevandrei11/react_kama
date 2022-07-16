@@ -64,6 +64,8 @@ class App extends React.Component {
             </Route>
 
             <Route path="/login" render={withSuspense(Login)} />
+          
+            <Route path="*" render={() => <div>404 NOT FOUND</div>} />
           </Switch>
         </main>
         <Footer />
