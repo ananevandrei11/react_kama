@@ -1,31 +1,31 @@
-import React from "react";
-import { Switch, Route, withRouter } from "react-router-dom";
-import "./App.css";
-import Nav from "./Components/Nav/Nav";
-import FriendsBar from "./Components/FriendsBar/FriendsBar";
-import Footer from "./Components/Footer/Footer";
-import News from "./Components/News/News";
-import Music from "./Components/Music/Music";
-import HeaderContainer from "./Components/Header/HeaderContainer";
-import { initializeApp } from "./Redux/appReducer";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import Preloder from "./Components/Preloader/Preloader";
-import { withSuspense } from "./HOC/WithSuspense";
+import React from 'react';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import './App.css';
+import Nav from './Components/Nav/Nav';
+import FriendsBar from './Components/FriendsBar/FriendsBar';
+import Footer from './Components/Footer/Footer';
+import News from './Components/News/News';
+import Music from './Components/Music/Music';
+import HeaderContainer from './Components/Header/HeaderContainer';
+import { initializeApp } from './Redux/appReducer';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import Preloder from './Components/Preloader/Preloader';
+import { withSuspense } from './HOC/WithSuspense';
 
 const DialogsContainer = React.lazy(() =>
-  import("./Components/Dialogs/Dialogs")
+  import('./Components/Dialogs/Dialogs')
 );
 
 const ProfileContainer = React.lazy(() =>
-  import("./Components/Profile/ProfileContainer")
+  import('./Components/Profile/ProfileContainer')
 );
 
 const UsersContainer = React.lazy(() =>
-  import("./Components/Users/UsersContainer")
+  import('./Components/Users/UsersContainer')
 );
 
-const Login = React.lazy(() => import("./Components/Login/Login"));
+const Login = React.lazy(() => import('./Components/Login/Login'));
 
 class App extends React.Component {
   componentDidMount() {
@@ -64,7 +64,7 @@ class App extends React.Component {
             </Route>
 
             <Route path="/login" render={withSuspense(Login)} />
-          
+
             <Route path="*" render={() => <div>404 NOT FOUND</div>} />
           </Switch>
         </main>
