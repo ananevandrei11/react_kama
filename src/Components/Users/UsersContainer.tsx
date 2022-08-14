@@ -1,15 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import {
-  setCurrentPage,
-  setTotalUsersCount,
-  toggleIsFollowingInProgress,
   getUsersThunk,
   followChangeThunk,
-} from "../../Redux/usersReducer";
-import Users from "./Users";
-import Preloder from "../Preloader/Preloader";
-import { compose } from "redux";
+} from '../../Redux/usersReducer';
 import {
   getPageSize,
   getUsers,
@@ -17,9 +12,13 @@ import {
   getCurrentPage,
   getIsFetching,
   getIsFollowingInProgress,
-} from "../../Redux/usersSelectorReducer";
+} from '../../Redux/usersSelectorReducer';
+import Users from './Users';
+import Preloder from '../Preloader/Preloader';
+import { UsersType } from '../../Types/types';
+import { AppStateType } from '../../Redux/reduxStore';
 
-let mapStateToProps = (state) => ({
+let mapStateToProps = (state: AppStateType) => ({
   users: getUsers(state),
   pageSize: getPageSize(state),
   totalUsersCount: getTotalUsersCount(state),
@@ -28,13 +27,19 @@ let mapStateToProps = (state) => ({
   isFollowingInProgress: getIsFollowingInProgress(state),
 });
 
-class UsersSubContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+type PropsType = {
+  users: Array<UsersType>;
+  isFollowingInProgress: boolean;
+  totalUsersCount: number;
+  pageSize: number;
+  currentPage: number;
+  isFetching: boolean;
+  getUsersThunk: (page: number, pageSize: number) => void;
+  followChangeThunk: (userID: number, action: string) => void;
+};
 
-  onPageChanged = (pageNumber) => {
+class UsersSubContainer extends React.Component<PropsType> {
+  onPageChanged = (pageNumber: number) => {
     this.props.getUsersThunk(pageNumber, this.props.pageSize);
   };
 
@@ -62,12 +67,10 @@ class UsersSubContainer extends React.Component {
 
 const UsersContainer = compose(
   connect(mapStateToProps, {
-    setCurrentPage,
-    setTotalUsersCount,
-    toggleIsFollowingInProgress,
     getUsersThunk,
     followChangeThunk,
-  }),
+  })
+  // @ts-ignore
 )(UsersSubContainer);
 
 export default UsersContainer;
