@@ -1,22 +1,8 @@
+import { Dispatch } from 'redux';
+import { UsersMessagesType, MessagesType } from '../Types/types';
 const ADD_MESSAGE = 'ADD_MESSAGE';
 
-type UsersType = {
-  id: number;
-  name: string;
-};
 
-type MessagesType = {
-  id: number;
-  text: string;
-};
-
-/*
-interface InitialStateType {
-  users: UsersType[];
-  messages: MessagesType[];
-  newMessage: string;
-}
-*/
 
 let initialState = {
   users: [
@@ -27,7 +13,7 @@ let initialState = {
     { id: 5, name: 'Alina' },
     { id: 6, name: 'Evgeniy' },
     { id: 7, name: 'Andrei' },
-  ] as UsersType[],
+  ] as UsersMessagesType[],
   messages: [
     { id: 1, text: 'Hi!' },
     { id: 2, text: 'Hello!' },
@@ -42,9 +28,11 @@ let initialState = {
 
 export type InitialStateType = typeof initialState;
 
+type ActionsType = AddMessage;
+
 const dialogsReducer = (
   state = initialState,
-  action: any
+  action: ActionsType
 ): InitialStateType => {
   switch (action.type) {
     case ADD_MESSAGE:
@@ -73,7 +61,9 @@ export const addMessageCreator = (text: string): AddMessage => ({
   newMessage: text,
 });
 
-export const addMessageThunk = (text: string) => (dispatch: Function) => {
+type DispatchType = Dispatch<ActionsType>;
+
+export const addMessageThunk = (text: string) => (dispatch: DispatchType) => {
   dispatch(addMessageCreator(text));
 };
 

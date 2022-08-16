@@ -1,6 +1,9 @@
+import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { userAPI } from '../API/Api';
 import { UsersType } from '../Types/types';
 import { updateObjectInArray } from '../Utils/Helpers/objectHelpers';
+import { AppStateType } from './reduxStore';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -16,12 +19,24 @@ let initialState = {
   totalUsersCount: 0 as number,
   currentPage: 1 as number,
   isFetching: true as boolean,
-  isFollowingInProgress: [] as number[], // array id of users
+  isFollowingInProgress: [] as number[],
 };
 
 type InitialStateType = typeof initialState;
 
-const usersReducer = (state = initialState, action: any): InitialStateType => {
+type ActionsType =
+  | FollowType
+  | UnFollowType
+  | SetUsersType
+  | SetCurrentPageType
+  | SetTotalUsersCountType
+  | ToggleIsFetchingType
+  | ToggleIsFollowingProgressType;
+
+const usersReducer = (
+  state = initialState,
+  action: ActionsType
+): InitialStateType => {
   switch (action.type) {
     case FOLLOW:
       return {
@@ -140,18 +155,33 @@ export const toggleIsFetching = (
   isFetching,
 });
 
+type ToggleIsFollowingProgressType = {
+  type: typeof TOGGLE_IS_FOLLOWING_PROGRESS;
+  isFetching: boolean;
+  userID: number;
+};
+
 export const toggleIsFollowingInProgress = (
   isFetching: boolean,
   userID: number
-) => ({
+): ToggleIsFollowingProgressType => ({
   type: TOGGLE_IS_FOLLOWING_PROGRESS,
   isFetching,
   userID,
 });
 
 // This is thunk
+type DispatchType = Dispatch<ActionsType>;
+type ThunkActionType = ThunkAction<
+  Promise<void>,
+  AppStateType,
+  unknown,
+  ActionsType
+>;
+
 export const getUsersThunk =
-  (page: number, pageSize: number) => async (dispatch: Function) => {
+  (page: number, pageSize: number): ThunkActionType =>
+  async (dispatch: DispatchType) => {
     dispatch(toggleIsFetching(true));
     dispatch(setCurrentPage(page));
 
@@ -162,7 +192,8 @@ export const getUsersThunk =
   };
 
 export const followChangeThunk =
-  (userID: number, action: string) => async (dispatch: Function) => {
+  (userID: number, action: string): ThunkActionType =>
+  async (dispatch: DispatchType) => {
     dispatch(toggleIsFetching(true));
     dispatch(toggleIsFollowingInProgress(true, userID));
 

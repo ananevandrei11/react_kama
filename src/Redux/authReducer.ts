@@ -1,4 +1,5 @@
 import { loginAPI, securityAPI } from '../API/Api';
+import { Dispatch } from 'redux';
 
 const SET_AUTH_USER_DATA = 'network/auth/SET_AUTH_USER_DATA';
 const TOGGLE_ERROR_LOGIN = 'network/auth/TOGGLE_ERROR_LOGIN';
@@ -19,10 +20,12 @@ let initialState: InitialStateType = {
   login: null,
   isAuth: false,
   errorLogin: null,
-  captcha: null,
+  captcha: null
 };
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+type ActionsType = SetAuthUserDataType | SetErrorLoginType | GetCaptchaUrlSuccesType;
+
+const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case SET_AUTH_USER_DATA:
       return {
@@ -39,7 +42,7 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
     case GET_CAPTCHA_URL_SUCCES:
       return {
         ...state,
-        captcha: action.payload,
+        captcha: action.payload.captcha,
       };
 
     default:
@@ -84,18 +87,20 @@ export const setErrorLogin = (
 type GetCaptchaUrlSuccesType = {
   type: typeof GET_CAPTCHA_URL_SUCCES;
   payload: {
-    captcha: string;
+    captcha: string | null;
   };
 };
 
 export const getCaptchaUrlSucces = (
-  captcha: string
+  captcha: string | null
 ): GetCaptchaUrlSuccesType => ({
   type: GET_CAPTCHA_URL_SUCCES,
   payload: { captcha },
 });
 
-export const setAuthUser = () => async (dispatch: Function) => {
+type DispatchType = Dispatch<ActionsType>;
+
+export const setAuthUser = () => async (dispatch: DispatchType) => {
   let response = await loginAPI.checkLogin();
 
   if (response.resultCode === 0) {
@@ -105,7 +110,7 @@ export const setAuthUser = () => async (dispatch: Function) => {
   dispatch(setErrorLogin(null));
 };
 
-export const getCaptchaUrlThunk = () => async (dispatch: Function) => {
+export const getCaptchaUrlThunk = () => async (dispatch: DispatchType) => {
   let captcha = await securityAPI.getCaptchaUrl();
   dispatch(getCaptchaUrlSucces(captcha.url));
 };
@@ -129,7 +134,7 @@ export const authLoginThunk =
     }
   };
 
-export const logOutThunk = () => async (dispatch: Function) => {
+export const logOutThunk = () => async (dispatch: DispatchType) => {
   let logout = await loginAPI.logOut();
   if (logout.data.resultCode === 0) {
     dispatch(setAuthUserData(null, null, null, false));

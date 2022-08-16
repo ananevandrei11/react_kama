@@ -15,12 +15,18 @@ export type ContactsType = {
 };
 
 export type ProfileType = {
-  userId: number;
-  lookingForAJob: boolean;
-  lookingForAJobDescription: string | null;
-  fullName: string;
-  contacts: ContactsType;
-  photos: PhotosType;
+  userId?: number | undefined;
+  lookingForAJob?: boolean | undefined;
+  lookingForAJobDescription?: string | undefined;
+  fullName?: string | undefined;
+  contacts?: ContactsType;
+  photos?: PhotosType;
+};
+
+export type PostType = {
+  id: number;
+  message: string;
+  likesСount: number;
 };
 
 export type UsersType = {
@@ -29,4 +35,14 @@ export type UsersType = {
   status: string | null;
   photos: PhotosType;
   followed: boolean;
+};
+
+export type UsersMessagesType = {
+  id: number;
+  name: string;
+};
+
+export type MessagesType = {
+  id: number;
+  text: string;
 };
