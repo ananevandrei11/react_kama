@@ -11,6 +11,7 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@types/react-redux": "^7.1.24",
+    "@types/redux": "^3.6.0",
     "axios": "^0.26.1",
     "formik": "^2.2.9",
     "react": "^17.0.2",
@@ -50,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "react-test-renderer": "17.0.2"
   }
 }

@@ -30,8 +30,7 @@ const LoginForm = ({
   captcha,
   authLoginThunk,
 }) => {
-  //getCaptchaUrlThunk();
-  console.log(captcha);
+
   return (
     <Formik
       initialValues={{

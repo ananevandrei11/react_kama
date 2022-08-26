@@ -1,5 +1,6 @@
 import { loginAPI, securityAPI } from '../API/Api';
 import { Dispatch } from 'redux';
+import { ResultCodeEnum } from '../Types/types';
 
 const SET_AUTH_USER_DATA = 'network/auth/SET_AUTH_USER_DATA';
 const TOGGLE_ERROR_LOGIN = 'network/auth/TOGGLE_ERROR_LOGIN';
@@ -20,12 +21,18 @@ let initialState: InitialStateType = {
   login: null,
   isAuth: false,
   errorLogin: null,
-  captcha: null
+  captcha: null,
 };
 
-type ActionsType = SetAuthUserDataType | SetErrorLoginType | GetCaptchaUrlSuccesType;
+type ActionsType =
+  | SetAuthUserDataType
+  | SetErrorLoginType
+  | GetCaptchaUrlSuccesType;
 
-const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
+const authReducer = (
+  state = initialState,
+  action: ActionsType
+): InitialStateType => {
   switch (action.type) {
     case SET_AUTH_USER_DATA:
       return {
@@ -50,7 +57,7 @@ const authReducer = (state = initialState, action: ActionsType): InitialStateTyp
   }
 };
 
-type SetAuthUserDataPayloadType = {
+export type SetAuthUserDataPayloadType = {
   userId: number | null;
   login: string | null;
   email: string | null;
@@ -103,7 +110,7 @@ type DispatchType = Dispatch<ActionsType>;
 export const setAuthUser = () => async (dispatch: DispatchType) => {
   let response = await loginAPI.checkLogin();
 
-  if (response.resultCode === 0) {
+  if (response.resultCode === ResultCodeEnum.Success) {
     let { id, login, email } = response.data;
     dispatch(setAuthUserData(id, login, email, true));
   }
@@ -122,12 +129,12 @@ export const authLoginThunk =
       dispatch(setAuthUserData(login.data.userId, null, data.email, true));
 
       let loginCheck = await loginAPI.checkLogin();
-      if (loginCheck.resultCode === 0) {
+      if (loginCheck.resultCode === ResultCodeEnum.Success) {
         let { id, login, email } = loginCheck.data;
         dispatch(setAuthUserData(id, login, email, true));
       }
     } else {
-      if (login.resultCode === 10) {
+      if (login.resultCode === ResultCodeEnum.CaptchaIsRequired) {
         dispatch(getCaptchaUrlThunk());
       }
       dispatch(setErrorLogin(login.messages));

@@ -1,3 +1,5 @@
+import { number } from 'yup';
+
 export type PhotosType = {
   small: string | null;
   large: string | null;
@@ -45,4 +47,49 @@ export type UsersMessagesType = {
 export type MessagesType = {
   id: number;
   text: string;
+};
+
+export type LoginType = {
+  email: string;
+  password: string;
+  rememberMe: boolean | false;
+  captcha: string | null;
+};
+
+export type LoginDataType = {
+  data: LoginType;
+};
+
+/* API TYPES */
+export enum ResultCodeEnum {
+  Success = 0,
+  Error = 1,
+  CaptchaIsRequired = 10,
+}
+
+export enum ResultCodeWithCaptchaEnum {
+  CaptchaIsRequired = 10
+}
+
+export type CheckLoginAPIType = {
+  data: {
+    id: number;
+    email: string;
+    login: string;
+  };
+  resultCode: ResultCodeEnum;
+  messages: Array<string>;
+};
+
+export type LogitDataType = {
+  email: string;
+  password: string;
+  rememberMe: string;
+  captcha: string;
+};
+
+export type LoginAPIType = {
+  data: LogitDataType;
+  resultCode: ResultCodeEnum | ResultCodeWithCaptchaEnum;
+  messages: Array<string>;
 };
