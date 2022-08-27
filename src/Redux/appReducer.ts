@@ -1,41 +1,37 @@
 import { setAuthUser } from './authReducer';
+import { InferActionsType } from './reduxStore';
 
-const INITIALIZED_SUCCES = 'INITIALIZED_SUCCES';
-
-export type InitialStateType = {
-	initialized: boolean;
+let initialState = {
+  initialized: false,
 };
 
-let initialState: InitialStateType = {
-	initialized: false,
+export type InitialStateType = typeof initialState;
+type ActionsType = InferActionsType<typeof actions>;
+
+const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
+  switch (action.type) {
+    case 'SN/APP/INITIALIZED_SUCCESS':
+      return {
+        ...state,
+        initialized: true,
+      };
+
+    default:
+      return state;
+  }
 };
 
-const appReducer = (state = initialState, action: any): InitialStateType => {
-	switch (action.type) {
-		case INITIALIZED_SUCCES:
-			return {
-				...state,
-				initialized: true,
-			};
-
-		default:
-			return state;
-	}
+export const actions = {
+  setInitializedSuccess: () => ({
+    type: 'SN/APP/INITIALIZED_SUCCESS'
+  } as const),
 };
-
-type InitializedSuccesActipnType = {
-	type: typeof INITIALIZED_SUCCES;
-};
-
-export const setInitializedSucces = (): InitializedSuccesActipnType => ({
-	type: INITIALIZED_SUCCES,
-});
 
 export const initializeApp = () => (dispatch: any) => {
-	let dispathResult = dispatch(setAuthUser());
-	Promise.all([dispathResult]).then(() => {
-		dispatch(setInitializedSucces());
-	});
+  let dispatchResult = dispatch(setAuthUser());
+  Promise.all([dispatchResult]).then(() => {
+    dispatch(actions.setInitializedSuccess());
+  });
 };
 
 export default appReducer;

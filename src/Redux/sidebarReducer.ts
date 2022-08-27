@@ -37,7 +37,7 @@ let initialState = {
 
 const sidebarReducer = (
   state = initialState,
-  action: any
+  action: null
 ): InitialStateType => {
   return state;
 };

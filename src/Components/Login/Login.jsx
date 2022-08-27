@@ -46,7 +46,6 @@ const LoginForm = ({
         captcha: Yup.string().required('It is required.'),
       })}
       onSubmit={async (values) => {
-        console.log(values);
         await authLoginThunk(values);
       }}
     >
@@ -60,7 +59,7 @@ const LoginForm = ({
           {captcha && (
             <>
               <InputText name="captcha" type="text" placeholder="Captcha" />
-              <img src={captcha.captcha} alt="captcha" />
+              <img src={captcha} alt="captcha" />
             </>
           )}
           <div>

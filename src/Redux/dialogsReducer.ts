@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { UsersMessagesType, MessagesType } from '../Types/types';
-const ADD_MESSAGE = 'ADD_MESSAGE';
+const ADD_MESSAGE = 'SN/DIALOGS/ADD_MESSAGE';
 
 
 
@@ -28,7 +28,7 @@ let initialState = {
 
 export type InitialStateType = typeof initialState;
 
-type ActionsType = AddMessage;
+type ActionsType = AddMessageType;
 
 const dialogsReducer = (
   state = initialState,
@@ -51,12 +51,12 @@ const dialogsReducer = (
   }
 };
 
-type AddMessage = {
+type AddMessageType = {
   type: typeof ADD_MESSAGE;
   newMessage: string;
 };
 
-export const addMessageCreator = (text: string): AddMessage => ({
+export const addMessageActionCreator = (text: string): AddMessageType => ({
   type: ADD_MESSAGE,
   newMessage: text,
 });
@@ -64,7 +64,7 @@ export const addMessageCreator = (text: string): AddMessage => ({
 type DispatchType = Dispatch<ActionsType>;
 
 export const addMessageThunk = (text: string) => (dispatch: DispatchType) => {
-  dispatch(addMessageCreator(text));
+  dispatch(addMessageActionCreator(text));
 };
 
 export default dialogsReducer;

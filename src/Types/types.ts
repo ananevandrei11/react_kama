@@ -1,8 +1,10 @@
-import { number } from 'yup';
-
 export type PhotosType = {
   small: string | null;
   large: string | null;
+};
+
+export type PhotoDataType = {
+  photos: PhotosType;
 };
 
 export type ContactsType = {
@@ -68,17 +70,13 @@ export enum ResultCodeEnum {
 }
 
 export enum ResultCodeWithCaptchaEnum {
-  CaptchaIsRequired = 10
+  CaptchaIsRequired = 10,
 }
 
 export type CheckLoginAPIType = {
-  data: {
-    id: number;
-    email: string;
-    login: string;
-  };
-  resultCode: ResultCodeEnum;
-  messages: Array<string>;
+  id: number;
+  email: string;
+  login: string;
 };
 
 export type LogitDataType = {
@@ -88,8 +86,19 @@ export type LogitDataType = {
   captcha: string;
 };
 
-export type LoginAPIType = {
-  data: LogitDataType;
-  resultCode: ResultCodeEnum | ResultCodeWithCaptchaEnum;
-  messages: Array<string>;
+export type AuthLoginPostDataType = {
+  data: { usedId: number };
+};
+
+export type GetItemsType = {
+  items: Array<UsersType>;
+  totalCount: number;
+  error: string | null;
+};
+
+export type ResponsePostType<D = {}> = {
+  data: D;
+  fieldsErrors: any;
+  resultCode: ResultCodeEnum;
+  messages: Array<string | null>;
 };
