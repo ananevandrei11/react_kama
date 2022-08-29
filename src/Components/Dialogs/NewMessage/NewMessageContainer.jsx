@@ -5,8 +5,9 @@ import {
   addMessageThunk,
 } from "../../../Redux/dialogsReducer";
 import NewMessage from "./NewMessage";
+import { AppStateType } from '../../../Redux/reduxStore';
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType) => {
   return {
     newMessage: state.dialogPage.newMessage,
   };

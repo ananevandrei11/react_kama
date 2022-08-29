@@ -25,6 +25,7 @@ export type ProfileType = {
   fullName?: string | undefined;
   contacts?: ContactsType;
   photos?: PhotosType;
+  aboutMe?: string;
 };
 
 export type PostType = {

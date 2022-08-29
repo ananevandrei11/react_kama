@@ -1,14 +1,21 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import userNoAvatar from "../../../Asets/images/noavatar.svg";
-import cls from "./User.module.css";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import userNoAvatar from '../../../Asets/images/noavatar.svg';
+import { UsersType } from '../../../Types/types';
+import cls from './User.module.css';
 
-const User = ({ user, followChange, isFollowingInProgress }) => {
+type UserPropType = {
+  user: UsersType;
+  followChange: (userID: number, action: string) => void;
+  isFollowingInProgress: Array<number>;
+};
+
+const User = ({ user, followChange, isFollowingInProgress }: UserPropType) => {
   return (
     <article>
       <div>
         <figure>
-          <NavLink to={"/profile/" + user.id} className={cls.link}>
+          <NavLink to={'/profile/' + user.id} className={cls.link}>
             <img
               width="40"
               height="40"
@@ -21,7 +28,7 @@ const User = ({ user, followChange, isFollowingInProgress }) => {
         {user.followed ? (
           <button
             onClick={() => {
-              followChange(user.id, "unfollow");
+              followChange(user.id, 'unfollow');
             }}
             disabled={isFollowingInProgress.some((id) => id === user.id)}
           >
@@ -30,7 +37,7 @@ const User = ({ user, followChange, isFollowingInProgress }) => {
         ) : (
           <button
             onClick={() => {
-              followChange(user.id, "follow");
+              followChange(user.id, 'follow');
             }}
             disabled={isFollowingInProgress.some((id) => id === user.id)}
           >
@@ -41,8 +48,8 @@ const User = ({ user, followChange, isFollowingInProgress }) => {
       <div>
         <p>{user.name}</p>
         <p>{user.status}</p>
-        <p>{"user.location.country"}</p>
-        <p>{"user.location.city"}</p>
+        <p>{'user.location.country'}</p>
+        <p>{'user.location.city'}</p>
       </div>
     </article>
   );

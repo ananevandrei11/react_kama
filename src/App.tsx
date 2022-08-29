@@ -1,5 +1,12 @@
-import React from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import React, { PropsWithChildren } from 'react';
+import {
+  Switch,
+  Route,
+  withRouter,
+  RouteComponentProps,
+  RouteProps,
+  RouteChildrenProps,
+} from 'react-router-dom';
 import './App.css';
 import Nav from './Components/Nav/Nav';
 import FriendsBar from './Components/FriendsBar/FriendsBar';
@@ -12,22 +19,32 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import Preloder from './Components/Preloader/Preloader';
 import { withSuspense } from './HOC/WithSuspense';
+import { AppStateType } from './Redux/reduxStore';
 
-const DialogsContainer = React.lazy(() =>
-  import('./Components/Dialogs/Dialogs')
+type AppMapPropsType = ReturnType<typeof mapStateToProps>;
+type AppDispatchPropsType = {
+  initializeApp: () => void;
+};
+
+const DialogsContainer = React.lazy(
+  () => import('./Components/Dialogs/Dialogs')
 );
 
-const ProfileContainer = React.lazy(() =>
-  import('./Components/Profile/ProfileContainer')
+const ProfileContainer = React.lazy(
+  () => import('./Components/Profile/ProfileContainer')
 );
 
-const UsersContainer = React.lazy(() =>
-  import('./Components/Users/UsersContainer')
+const UsersContainer = React.lazy(
+  () => import('./Components/Users/UsersContainer')
 );
 
 const Login = React.lazy(() => import('./Components/Login/Login'));
 
-class App extends React.Component {
+const SuspendedDialog = withSuspense(DialogsContainer);
+
+class App extends React.Component<
+  AppMapPropsType & AppDispatchPropsType
+> {
   componentDidMount() {
     this.props.initializeApp();
   }
@@ -46,7 +63,7 @@ class App extends React.Component {
         </aside>
         <main className="app-wrapper-content">
           <Switch>
-            <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
+            <Route path="/dialogs" render={() => <SuspendedDialog />} />
 
             <Route
               path="/profile/:userID?"
@@ -74,11 +91,11 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized,
 });
 
-export default compose(
+export default compose<React.ComponentType>(
   withRouter,
   connect(mapStateToProps, { initializeApp })
 )(App);

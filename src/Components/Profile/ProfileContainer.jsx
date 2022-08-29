@@ -10,9 +10,7 @@ import {
 } from "../../Redux/profileReducer";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
-
 class ProfileSubContainer extends React.Component {
-
   refreshProfile() {
     let userID = this.props.match.params.userID;
     let userAuthID = this.props.isAuth ? this.props.userId : 2;

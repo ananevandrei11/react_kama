@@ -61,7 +61,7 @@ export const addMessageActionCreator = (text: string): AddMessageType => ({
   newMessage: text,
 });
 
-type DispatchType = Dispatch<ActionsType>;
+export type DispatchType = Dispatch<ActionsType>;
 
 export const addMessageThunk = (text: string) => (dispatch: DispatchType) => {
   dispatch(addMessageActionCreator(text));

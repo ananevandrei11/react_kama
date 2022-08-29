@@ -1,11 +1,17 @@
-import React from "react";
-import classes from "./NewMessage.module.css";
-import { Formik, Form, useFormik } from "formik";
-import * as Yup from "yup";
-import { InputText } from "../../Common/FormControls/FormsControls";
-import { textLengthAndRequired } from "../../../Utils/Validators/Validators";
+import React from 'react';
+import classes from './NewMessage.module.css';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { InputText } from '../../Common/FormControls/FormsControls';
+import { textLengthAndRequired } from '../../../Utils/Validators/Validators';
+import { DispatchType } from '../../../Redux/dialogsReducer';
 
-const NewMessage = (props) => {
+type MessagePropsType = {
+  newMessage: string;
+  addMessageThunk: (text: string) => (dispatch: DispatchType) => void;
+};
+
+const NewMessage = (props: MessagePropsType) => {
   return (
     <Formik
       initialValues={{

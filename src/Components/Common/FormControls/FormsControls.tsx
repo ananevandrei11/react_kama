@@ -1,12 +1,13 @@
-import { Field, useField, FieldHookConfig, FieldProps, FieldInputProps } from 'formik';
+import {
+  Field,
+  useField,
+  FieldInputProps,
+  FieldArrayRenderProps,
+} from 'formik';
 import React, { FC, PropsWithChildren } from 'react';
 import cls from './FromControls.module.css';
 
-type InputType = {
-  field: FieldInputProps<string>
-}
-
-export const InputText: FC<FieldInputProps<string>> = ({ ...props }) => {
+export const InputText: FC<FieldInputProps<string> & any> = ({ ...props }) => {
   const [field, meta] = useField(props);
 
   return (

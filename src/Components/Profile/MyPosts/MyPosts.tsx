@@ -5,14 +5,21 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 import {textLengthAndRequired} from '../../../Utils/Validators/Validators';
 import { InputText } from "../../Common/FormControls/FormsControls";
+import { PostType } from "../../../Types/types";
 
-const MyPosts = (props) => {
+type MyPostsPropsType = {
+  posts: PostType[];
+  newPostText: string;
+  addPostThunk: (text: string) => void;
+}
+
+const MyPosts = (props: MyPostsPropsType) => {
   let posts = props.posts;
 
   let content = posts.map((post) => (
     <Post
       key={post.id}
-      idItem={`item-${post.id}`}
+      id={`item-${post.id}`}
       children={
         <>
           <h3>{"Post " + post.id}</h3>

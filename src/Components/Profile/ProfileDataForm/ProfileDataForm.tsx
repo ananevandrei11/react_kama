@@ -1,16 +1,37 @@
-import React from "react";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
+import React from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import {
   InputCheckbox,
   InputText,
-} from "../../Common/FormControls/FormsControls";
-import { textLengthAndRequired } from "../../../Utils/Validators/Validators";
+} from '../../Common/FormControls/FormsControls';
+import { textLengthAndRequired } from '../../../Utils/Validators/Validators';
+import { ContactsType, PhotosType } from '../../../Types/types';
 
-const ProfileDataForm = ({ profile, handleSubmit }) => {
+type ProfileDataFormType = {
+  profile: {
+    userId?: number | undefined;
+    lookingForAJob?: boolean | undefined;
+    lookingForAJobDescription?: string | undefined;
+    fullName?: string | undefined;
+    contacts: ContactsType;
+    photos?: PhotosType;
+    aboutMe: string;
+  };
+  handleSubmit: (values: {
+    fullName: string | undefined;
+    aboutMe: string;
+    lookingForAJobDescription: string | undefined;
+    lookingForAJob: boolean | undefined;
+    contacts: {};
+  }) => void;
+};
+
+const ProfileDataForm = ({ profile, handleSubmit }: ProfileDataFormType) => {
   let contactsKey = {};
   Object.keys(profile.contacts).map((site, index) => {
-    contactsKey[site] = profile.contacts[site] || "";
+    // @ts-ignore
+    contactsKey[site] = profile.contacts[site] || '';
   });
 
   return (
@@ -44,6 +65,7 @@ const ProfileDataForm = ({ profile, handleSubmit }) => {
           <br />
           <InputCheckbox
             name="lookingForAJob"
+            // @ts-ignore
             type="checkbox"
             id="lookingForAJob"
           >
@@ -65,13 +87,12 @@ const ProfileDataForm = ({ profile, handleSubmit }) => {
               <InputText
                 type="url"
                 placeholder={
-                  profile.contacts[site]
-                    ? profile.contacts[site]
-                    : "https://" + site + ".com"
+                  // @ts-ignore
+                  profile.contacts[site] ? profile.contacts[site] : 'https://' + site + '.com'
                 }
-                name={"contacts." + site}
+                name={'contacts.' + site}
               />
-							<br />
+              <br />
             </label>
           ))}
           <div>
