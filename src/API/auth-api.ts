@@ -1,21 +1,21 @@
 import {
-  AuthLoginPostDataType,
-  CheckLoginAPIType,
-  LogitDataType,
-  ResponsePostType,
+  MeResponseDataType,
+  LoginResponseDataType,
+  LoginDataType,
+  ResponseType
 } from '../Types/types';
 import { instance } from './Api';
 
 export const loginAPI = {
-  checkLogin() {
+  me() {
     return instance
-      .get<ResponsePostType<CheckLoginAPIType>>(`auth/me`)
+      .get<ResponseType<MeResponseDataType>>(`auth/me`)
       .then((res) => res.data);
   },
 
-  authLogin(data: LogitDataType) {
+  login(data: LoginDataType) {
     return instance
-      .post<ResponsePostType<AuthLoginPostDataType>>('auth/login', {
+      .post<ResponseType<LoginResponseDataType>>('auth/login', {
         email: data.email,
         password: data.password,
         rememberMe: data.rememberMe,
@@ -27,7 +27,7 @@ export const loginAPI = {
       });
   },
 
-  logOut() {
+  logout() {
     return instance.delete('auth/login');
   },
 };

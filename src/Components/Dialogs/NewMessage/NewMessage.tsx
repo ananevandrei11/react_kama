@@ -4,26 +4,26 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { InputText } from '../../Common/FormControls/FormsControls';
 import { textLengthAndRequired } from '../../../Utils/Validators/Validators';
-import { DispatchType } from '../../../Redux/dialogsReducer';
 
 type MessagePropsType = {
   newMessage: string;
-  addMessageThunk: (text: string) => (dispatch: DispatchType) => void;
+  addMessageThunk: (text: string) => (dispatch: any) => void;
 };
 
 const NewMessage = (props: MessagePropsType) => {
+  const { newMessage, addMessageThunk } = props;
   return (
     <Formik
       initialValues={{
-        newMessageBody: props.newMessage,
+        newMessageBody: newMessage,
       }}
       validationSchema={Yup.object().shape({
         newMessageBody: textLengthAndRequired(50),
       })}
       onSubmit={(values, { resetForm }) => {
-        props.addMessageThunk(values.newMessageBody);
+        addMessageThunk(values.newMessageBody);
         resetForm({
-          values: { newMessageBody: props.newMessage },
+          values: { newMessageBody: newMessage },
         });
       }}
     >

@@ -6,7 +6,7 @@ import cls from './Users.module.css';
 
 type PropsType = {
   users: Array<UsersType>;
-  isFollowingInProgress: boolean;
+  isFollowingInProgress: number[];
   totalUsersCount: number;
   pageSize: number;
   currentPage: number;

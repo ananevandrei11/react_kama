@@ -3,10 +3,6 @@ import classes from './Dialogs.module.css';
 import DialogMessage from './DialogMessage/DialogsMessage';
 import DialogUser from './DialogUser/DialogsUser';
 import NewMessageContainer from './NewMessage/NewMessageContainer';
-import { connect } from 'react-redux';
-import { withAuthRedirect } from '../../HOC/AuthRedirect';
-import { compose } from 'redux';
-import { AppStateType } from '../../Redux/reduxStore';
 import { MessagesType, UsersMessagesType } from '../../Types/types';
 
 type DialogsPropsType = {
@@ -14,7 +10,7 @@ type DialogsPropsType = {
   messages: MessagesType[];
 };
 
-const Dialogs = (props: DialogsPropsType) => {
+const Dialogs: React.FC<DialogsPropsType> = (props) => {
   return (
     <div className={classes.dialogs}>
       <aside className={classes.names}>
@@ -34,17 +30,4 @@ const Dialogs = (props: DialogsPropsType) => {
   );
 };
 
-let mapStateToProps = (state: AppStateType) => {
-  return {
-    users: state.dialogPage.users,
-    messages: state.dialogPage.messages,
-  };
-};
-
-const DialogsContainer = compose(
-  connect(mapStateToProps),
-  withAuthRedirect
-  // @ts-ignore
-)(Dialogs);
-
-export default DialogsContainer;
+export default Dialogs;

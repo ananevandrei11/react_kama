@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { authLoginThunk } from "../../Redux/authReducer";
+import { loginThunk } from "../../Redux/authReducer";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { InputCheckbox, InputText } from "../Common/FormControls/FormsControls";
@@ -28,7 +28,7 @@ const Login = (props) => {
 const LoginForm = ({
   errorLogin,
   captcha,
-  authLoginThunk,
+  loginThunk,
 }) => {
 
   return (
@@ -46,7 +46,7 @@ const LoginForm = ({
         captcha: Yup.string().required('It is required.'),
       })}
       onSubmit={async (values) => {
-        await authLoginThunk(values);
+        await loginThunk(values);
       }}
     >
       {({ validateForm, isSubmitting }) => (
@@ -88,7 +88,7 @@ let mapStateToProps = (state) => ({
 });
 
 const LoginFormRedux = connect(mapStateToProps, {
-  authLoginThunk,
+  loginThunk,
 })(Login);
 
 export default LoginFormRedux;

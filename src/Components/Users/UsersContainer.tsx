@@ -29,7 +29,7 @@ let mapStateToProps = (state: AppStateType) => ({
 
 type PropsType = {
   users: Array<UsersType>;
-  isFollowingInProgress: boolean;
+  isFollowingInProgress: number[];
   totalUsersCount: number;
   pageSize: number;
   currentPage: number;

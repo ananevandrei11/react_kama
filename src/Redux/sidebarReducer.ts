@@ -1,13 +1,3 @@
-type FriendsType = {
-  id: number;
-  name: string;
-  avatar: string;
-};
-
-type InitialStateType = {
-  friends: FriendsType[];
-};
-
 let initialState = {
   friends: [
     {
@@ -21,25 +11,11 @@ let initialState = {
       name: 'Ravil',
       avatar: 'https://cdn-icons-png.flaticon.com/512/1184/1184457.png',
     },
-    {
-      id: 3,
-      name: 'Andrei',
-      avatar:
-        'https://media.istockphoto.com/vectors/male-avatar-icon-or-portrait-handsome-young-man-face-with-beard-vector-id1143511824?k=20&m=1143511824&s=170667a&w=0&h=OjcgBMRpj82IXTItixtv6aIbeP9vny0lCqg0eY6ZONQ=',
-    },
-    {
-      id: 4,
-      name: 'Dmitriy',
-      avatar: 'https://cdn-icons-png.flaticon.com/512/1750/1750556.png',
-    },
   ],
 };
 
-const sidebarReducer = (
-  state = initialState,
-  action: null
-): InitialStateType => {
-  return state;
-};
+export type InitialStateType = typeof initialState;
+
+const sidebarReducer = (state = initialState, action: null): InitialStateType => state;
 
 export default sidebarReducer;

@@ -3,7 +3,7 @@ export type PhotosType = {
   large: string | null;
 };
 
-export type PhotoDataType = {
+export type PhotoResponseDataType = {
   photos: PhotosType;
 };
 
@@ -52,15 +52,11 @@ export type MessagesType = {
   text: string;
 };
 
-export type LoginType = {
+export type LoginDataType = {
   email: string;
   password: string;
   rememberMe: boolean | false;
   captcha: string | null;
-};
-
-export type LoginDataType = {
-  data: LoginType;
 };
 
 /* API TYPES */
@@ -74,22 +70,19 @@ export enum ResultCodeWithCaptchaEnum {
   CaptchaIsRequired = 10,
 }
 
-export type CheckLoginAPIType = {
+export type MeResponseDataType = {
   id: number;
   email: string;
   login: string;
 };
 
-export type LogitDataType = {
-  email: string;
-  password: string;
-  rememberMe: string;
-  captcha: string;
+export type LoginResponseDataType = {
+  userId: number; 
 };
 
-export type AuthLoginPostDataType = {
-  data: { usedId: number };
-};
+export type GetCaptchaUrlResponseDataType = {
+  url: string;
+}
 
 export type GetItemsType = {
   items: Array<UsersType>;
@@ -97,7 +90,7 @@ export type GetItemsType = {
   error: string | null;
 };
 
-export type ResponsePostType<D = {}> = {
+export type ResponseType<D = {}> = {
   data: D;
   fieldsErrors: any;
   resultCode: ResultCodeEnum;

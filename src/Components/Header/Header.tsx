@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import classes from "./Header.module.css";
 import { NavLink } from "react-router-dom";
+import { MapDispatchToPropsType, MapStateToPropsType } from "./HeaderContainer";
 
-const Header = (props) => {
+const Header = (props: MapStateToPropsType & MapDispatchToPropsType) => {
   const [isAuth, setIsAuth] = useState(props.isAuth);
 
   useEffect(() => {

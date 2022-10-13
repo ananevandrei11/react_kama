@@ -6,30 +6,16 @@ import {
   InputText,
 } from '../../Common/FormControls/FormsControls';
 import { textLengthAndRequired } from '../../../Utils/Validators/Validators';
-import { ContactsType, PhotosType } from '../../../Types/types';
+import { ProfileType } from '../../../Types/types';
 
 type ProfileDataFormType = {
-  profile: {
-    userId?: number | undefined;
-    lookingForAJob?: boolean | undefined;
-    lookingForAJobDescription?: string | undefined;
-    fullName?: string | undefined;
-    contacts: ContactsType;
-    photos?: PhotosType;
-    aboutMe: string;
-  };
-  handleSubmit: (values: {
-    fullName: string | undefined;
-    aboutMe: string;
-    lookingForAJobDescription: string | undefined;
-    lookingForAJob: boolean | undefined;
-    contacts: {};
-  }) => void;
+  profile: ProfileType 
+  handleSubmit: (values: ProfileType) => void;
 };
 
 const ProfileDataForm = ({ profile, handleSubmit }: ProfileDataFormType) => {
   let contactsKey = {};
-  Object.keys(profile.contacts).map((site, index) => {
+  profile.contacts && Object.keys(profile.contacts).map((site) => {
     // @ts-ignore
     contactsKey[site] = profile.contacts[site] || '';
   });
@@ -48,7 +34,7 @@ const ProfileDataForm = ({ profile, handleSubmit }: ProfileDataFormType) => {
         aboutMe: textLengthAndRequired(100),
       })}
       onSubmit={async (values, { resetForm }) => {
-        await handleSubmit(values);
+        await handleSubmit(values as ProfileType);
         resetForm();
       }}
     >
@@ -81,7 +67,7 @@ const ProfileDataForm = ({ profile, handleSubmit }: ProfileDataFormType) => {
             />
           )}
           <br />
-          {Object.keys(profile.contacts).map((site, index) => (
+          {profile.contacts && Object.keys(profile.contacts).map((site, index) => (
             <label key={site}>
               <span>{site}:</span>
               <InputText

@@ -6,6 +6,11 @@ import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 type ProfilePropsType = {
   profile: ProfileType;
+  status: string;
+  isOwner: boolean;
+  savePhoto: (file: File) => void;
+  saveProfile: (values: ProfileType) => Promise<any>;
+  updateStatus: (status: string) => void;
 };
 
 const Profile = (props: ProfilePropsType) => {

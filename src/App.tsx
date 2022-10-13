@@ -1,12 +1,8 @@
-import React, { PropsWithChildren } from 'react';
-import {
-  Switch,
-  Route,
-  withRouter,
-  RouteComponentProps,
-  RouteProps,
-  RouteChildrenProps,
-} from 'react-router-dom';
+import React from 'react';
+import { Switch, Route, withRouter, BrowserRouter } from 'react-router-dom';
+import { connect, Provider } from 'react-redux';
+import { compose } from 'redux';
+import store from './Redux/reduxStore';
 import './App.css';
 import Nav from './Components/Nav/Nav';
 import FriendsBar from './Components/FriendsBar/FriendsBar';
@@ -15,8 +11,6 @@ import News from './Components/News/News';
 import Music from './Components/Music/Music';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import { initializeApp } from './Redux/appReducer';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
 import Preloder from './Components/Preloader/Preloader';
 import { withSuspense } from './HOC/WithSuspense';
 import { AppStateType } from './Redux/reduxStore';
@@ -27,7 +21,7 @@ type AppDispatchPropsType = {
 };
 
 const DialogsContainer = React.lazy(
-  () => import('./Components/Dialogs/Dialogs')
+  () => import('./Components/Dialogs/DialogsContainer')
 );
 
 const ProfileContainer = React.lazy(
@@ -40,11 +34,10 @@ const UsersContainer = React.lazy(
 
 const Login = React.lazy(() => import('./Components/Login/Login'));
 
-const SuspendedDialog = withSuspense(DialogsContainer);
+const SuspendedDialogs = withSuspense(DialogsContainer);
+const SuspendedProfile = withSuspense(ProfileContainer);
 
-class App extends React.Component<
-  AppMapPropsType & AppDispatchPropsType
-> {
+class App extends React.Component<AppMapPropsType & AppDispatchPropsType> {
   componentDidMount() {
     this.props.initializeApp();
   }
@@ -62,26 +55,28 @@ class App extends React.Component<
           <FriendsBar />
         </aside>
         <main className="app-wrapper-content">
+          {/* @ts-ignore */}
           <Switch>
-            <Route path="/dialogs" render={() => <SuspendedDialog />} />
-
+            {/* @ts-ignore */}
+            <Route path="/dialogs" render={() => <SuspendedDialogs />} />
+            {/* @ts-ignore */}
             <Route
               path="/profile/:userID?"
-              render={withSuspense(ProfileContainer)}
+              render={() => <SuspendedProfile />}
             />
-
-            <Route path="/users" render={withSuspense(UsersContainer)} />
-
+            {/* @ts-ignore */}
+            <Route path="/users" render={() => withSuspense(UsersContainer)} />
+            {/* @ts-ignore */}
             <Route path="/news">
               <News />
             </Route>
-
+            {/* @ts-ignore */}
             <Route path="/music">
               <Music />
             </Route>
-
-            <Route path="/login" render={withSuspense(Login)} />
-
+            {/* @ts-ignore */}
+            <Route path="/login" render={() => withSuspense(Login)} />
+            {/* @ts-ignore */}
             <Route path="*" render={() => <div>404 NOT FOUND</div>} />
           </Switch>
         </main>
@@ -95,7 +90,19 @@ const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized,
 });
 
-export default compose<React.ComponentType>(
+const AppContainer = compose<React.ComponentType>(
   withRouter,
   connect(mapStateToProps, { initializeApp })
 )(App);
+
+const SamuraiJSApp: React.FC = () => (
+  // @ts-ignore
+  <BrowserRouter>
+    {/* @ts-ignore */}
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
+  </BrowserRouter>
+);
+
+export default SamuraiJSApp;

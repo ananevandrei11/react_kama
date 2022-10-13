@@ -7,10 +7,10 @@ import cls from './User.module.css';
 type UserPropType = {
   user: UsersType;
   followChange: (userID: number, action: string) => void;
-  isFollowingInProgress: Array<number>;
+  isFollowingInProgress: number[];
 };
 
-const User = ({ user, followChange, isFollowingInProgress }: UserPropType) => {
+const User: React.FC<UserPropType> = ({ user, followChange, isFollowingInProgress }) => {
   return (
     <article>
       <div>

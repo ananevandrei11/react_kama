@@ -11,7 +11,7 @@ let mapStateToProps = (state: AppStateType) => {
   return {
     posts: state.profilePage.posts,
     newPostText: state.profilePage.newPostText,
-  };
+  }
 };
 
 const MyPostsContainer = compose(

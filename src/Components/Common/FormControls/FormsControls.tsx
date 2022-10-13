@@ -1,8 +1,7 @@
 import {
   Field,
   useField,
-  FieldInputProps,
-  FieldArrayRenderProps,
+  FieldInputProps
 } from 'formik';
 import React, { FC, PropsWithChildren } from 'react';
 import cls from './FromControls.module.css';

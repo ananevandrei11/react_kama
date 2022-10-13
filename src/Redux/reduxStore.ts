@@ -27,15 +27,13 @@ export type AppStateType = ReturnType<RootReducerType>;
 
 export type InferActionsType<T> = T extends {
   [key: string]: (...args: any[]) => infer U;
-}
-  ? U
-  : never;
+} ? U : never;
 
-export type BaseThunkType<AT extends Action, R = Promise<void>> = ThunkAction<
+export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<
   R,
   AppStateType,
   unknown,
-  AT
+  A
 >;
 
 // @ts-ignore
