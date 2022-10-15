@@ -2,8 +2,9 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import {
-  getUsersThunk,
+  requestUsers,
   followChangeThunk,
+  FilterType,
 } from '../../Redux/usersReducer';
 import {
   getPageSize,
@@ -12,6 +13,7 @@ import {
   getCurrentPage,
   getIsFetching,
   getIsFollowingInProgress,
+  getUsersFIlter,
 } from '../../Redux/usersSelectorReducer';
 import Users from './Users';
 import Preloder from '../Preloader/Preloader';
@@ -24,6 +26,7 @@ let mapStateToProps = (state: AppStateType) => ({
   totalUsersCount: getTotalUsersCount(state),
   currentPage: getCurrentPage(state),
   isFetching: getIsFetching(state),
+  filter: getUsersFIlter(state),
   isFollowingInProgress: getIsFollowingInProgress(state),
 });
 
@@ -34,17 +37,22 @@ type PropsType = {
   pageSize: number;
   currentPage: number;
   isFetching: boolean;
-  getUsersThunk: (page: number, pageSize: number) => void;
+  filter: FilterType,
+  requestUsers: (page: number, pageSize: number, filter: FilterType) => void;
   followChangeThunk: (userID: number, action: string) => void;
 };
 
 class UsersSubContainer extends React.Component<PropsType> {
   onPageChanged = (pageNumber: number) => {
-    this.props.getUsersThunk(pageNumber, this.props.pageSize);
+    this.props.requestUsers(pageNumber, this.props.pageSize, this.props.filter);
   };
 
+  onFilterChanged = (filter: FilterType) => {
+    this.props.requestUsers(1, this.props.pageSize, filter);
+  }
+
   componentDidMount() {
-    this.props.getUsersThunk(this.props.currentPage, this.props.pageSize);
+    this.props.requestUsers(this.props.currentPage, this.props.pageSize, this.props.filter);
   }
 
   render() {
@@ -56,6 +64,7 @@ class UsersSubContainer extends React.Component<PropsType> {
           pageSize={this.props.pageSize}
           currentPage={this.props.currentPage}
           onPageChanged={this.onPageChanged}
+          onFilterChanged={this.onFilterChanged}
           users={this.props.users}
           followChange={this.props.followChangeThunk}
           isFollowingInProgress={this.props.isFollowingInProgress}
@@ -67,10 +76,9 @@ class UsersSubContainer extends React.Component<PropsType> {
 
 const UsersContainer = compose(
   connect(mapStateToProps, {
-    getUsersThunk,
+    requestUsers,
     followChangeThunk,
   })
-  // @ts-ignore
 )(UsersSubContainer);
 
 export default UsersContainer;

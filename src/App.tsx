@@ -36,6 +36,7 @@ const Login = React.lazy(() => import('./Components/Login/Login'));
 
 const SuspendedDialogs = withSuspense(DialogsContainer);
 const SuspendedProfile = withSuspense(ProfileContainer);
+const SuspendedUsers = withSuspense(UsersContainer);
 
 class App extends React.Component<AppMapPropsType & AppDispatchPropsType> {
   componentDidMount() {
@@ -65,7 +66,7 @@ class App extends React.Component<AppMapPropsType & AppDispatchPropsType> {
               render={() => <SuspendedProfile />}
             />
             {/* @ts-ignore */}
-            <Route path="/users" render={() => withSuspense(UsersContainer)} />
+            <Route path="/users" render={() => <SuspendedUsers/>} />
             {/* @ts-ignore */}
             <Route path="/news">
               <News />
