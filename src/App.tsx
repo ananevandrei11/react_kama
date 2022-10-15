@@ -37,6 +37,7 @@ const Login = React.lazy(() => import('./Components/Login/Login'));
 const SuspendedDialogs = withSuspense(DialogsContainer);
 const SuspendedProfile = withSuspense(ProfileContainer);
 const SuspendedUsers = withSuspense(UsersContainer);
+const SuspendedLogin = withSuspense(Login);
 
 class App extends React.Component<AppMapPropsType & AppDispatchPropsType> {
   componentDidMount() {
@@ -76,7 +77,7 @@ class App extends React.Component<AppMapPropsType & AppDispatchPropsType> {
               <Music />
             </Route>
             {/* @ts-ignore */}
-            <Route path="/login" render={() => withSuspense(Login)} />
+            <Route path="/login" render={() => <SuspendedLogin />} />
             {/* @ts-ignore */}
             <Route path="*" render={() => <div>404 NOT FOUND</div>} />
           </Switch>
