@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import queryString from 'query-string';
 import {
   FilterType,
   followChangeThunk,
@@ -29,6 +31,7 @@ const Users: React.FC<PropsType> = (props) => {
   const isFollowingInProgress = useSelector(getIsFollowingInProgress);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onPageChanged = (pageNumber: number) => {
     dispatch(requestUsers(pageNumber, pageSize, filter));
@@ -43,8 +46,23 @@ const Users: React.FC<PropsType> = (props) => {
   };
 
   useEffect(() => {
-    dispatch(requestUsers(currentPage, pageSize, filter));
+    const { search } = history.location;
+    const parsed = queryString.parse(search);
+    let actualFilter = filter;
+    if (!!parsed.term)
+      actualFilter = { ...actualFilter, term: parsed.term as string };
+    if (!!parsed.friend)
+      actualFilter = { ...actualFilter, friend: parsed.friend as string };
+    const actualPAge = parsed.page ? Number(parsed.page) : currentPage;
+    dispatch(requestUsers(actualPAge, pageSize, actualFilter));
   }, []);
+
+  useEffect(() => {
+    history.push({
+      pathname: '/users',
+      search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`,
+    });
+  }, [filter, currentPage, history]);
 
   return (
     <div>
