@@ -80,7 +80,7 @@ const Login = () => {
   const isAuth = useSelector((state: AppStateType) => state.auth.isAuth);
   const errorLogin = useSelector((state: AppStateType) => state.auth.errorLogin);
   const captcha = useSelector((state: AppStateType) => state.auth.captcha);
-  console.log(isAuth)
+
   if (isAuth) {
     // @ts-ignore
     return <Redirect to="/profile"></Redirect>;

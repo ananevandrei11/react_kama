@@ -5,17 +5,23 @@ import ProfileDataForm from '../ProfileDataForm/ProfileDataForm';
 import classes from './ProfileInfo.module.css';
 import userNoAvatar from '../../../Asets/images/noavatar.svg';
 import { ContactsType, ProfileType } from '../../../Types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppStateType } from '../../../Redux/reduxStore';
+import { savePhoto, saveProfile, updateStatus } from '../../../Redux/profileReducer';
 
 type ProfilePropsType = {
-  profile: ProfileType;
-  status: string;
+  profile: null | ProfileType;
   isOwner: boolean;
-  savePhoto: (file: File) => void;
-  saveProfile: (values: ProfileType) => Promise<any>;
-  updateStatus: (status: string) => void;
 };
 
 const ProfileInfo = (props: ProfilePropsType) => {
+  const status = useSelector((state: AppStateType) => state.profilePage.status);
+
+  const dispatch = useDispatch();
+  const handleStatus = (status: string) => {
+    dispatch(updateStatus(status));
+  };
+
   let imgProfile;
   const [editMode, setEditMode] = useState(false);
 
@@ -26,7 +32,7 @@ const ProfileInfo = (props: ProfilePropsType) => {
   }
 
   const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) props.savePhoto(e.target.files[0]);
+    if (e.target.files) dispatch(savePhoto(e.target.files[0]));
   };
 
   const toEditMode = () => {
@@ -34,7 +40,7 @@ const ProfileInfo = (props: ProfilePropsType) => {
   };
 
   const handleSubmit = (values: ProfileType) => {
-    props.saveProfile(values);
+    dispatch(saveProfile(values));
     setEditMode(false);
   };
 
@@ -48,8 +54,8 @@ const ProfileInfo = (props: ProfilePropsType) => {
           onChange={onMainPhotoSelected}
         />
         <ProfileStatus
-          updateStatus={props.updateStatus}
-          status={props.status}
+          updateStatus={handleStatus}
+          status={status}
         />
         {props.isOwner ? <button onClick={toEditMode}>Edit Mode</button> : null}
         {editMode ? (

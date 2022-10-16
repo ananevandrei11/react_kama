@@ -5,16 +5,16 @@ import { Formik, Form } from "formik";
 import * as Yup from 'yup';
 import {textLengthAndRequired} from '../../../Utils/Validators/Validators';
 import { InputText } from "../../Common/FormControls/FormsControls";
-import { PostType } from "../../../Types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { AppStateType } from "../../../Redux/reduxStore";
+import { addPostThunk } from "../../../Redux/profileReducer";
 
-type MyPostsPropsType = {
-  posts: PostType[];
-  newPostText: string;
-  addPostThunk: (text: string) => void;
-}
+type MyPostsPropsType = {}
 
 const MyPosts = (props: MyPostsPropsType) => {
-  let posts = props.posts;
+  let posts = useSelector((state: AppStateType) => state.profilePage.posts);
+  let newPostText = useSelector((state: AppStateType) => state.profilePage.newPostText);
+  let dispatch = useDispatch();
 
   let content = posts.map((post) => (
     <Post
@@ -35,7 +35,7 @@ const MyPosts = (props: MyPostsPropsType) => {
       <h2 className={classes.title}>My Posts</h2>
       <Formik
         initialValues={{
-          newPostText: props.newPostText,
+          newPostText: newPostText,
         }}
         validationSchema={
           Yup.object().shape({
@@ -43,9 +43,9 @@ const MyPosts = (props: MyPostsPropsType) => {
           })
         }
         onSubmit={(values, { resetForm }) => {
-          props.addPostThunk(values.newPostText);
+          dispatch(addPostThunk(values.newPostText));
           resetForm({
-            values: { newPostText: props.newPostText },
+            values: { newPostText: newPostText },
           });
         }}
       >
