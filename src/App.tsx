@@ -9,7 +9,7 @@ import FriendsBar from './Components/FriendsBar/FriendsBar';
 import Footer from './Components/Footer/Footer';
 import News from './Components/News/News';
 import Music from './Components/Music/Music';
-import HeaderContainer from './Components/Header/HeaderContainer';
+import Header from './Components/Header/Header';
 import { initializeApp } from './Redux/appReducer';
 import Preloder from './Components/Preloader/Preloader';
 import { withSuspense } from './HOC/WithSuspense';
@@ -33,11 +33,13 @@ const UsersContainer = React.lazy(
 );
 
 const Login = React.lazy(() => import('./Components/Login/Login'));
+const ChatPage = React.lazy(() => import('./Pages/Chat/ChatPage'));
 
 const SuspendedDialogs = withSuspense(DialogsContainer);
 const SuspendedProfile = withSuspense(ProfileContainer);
 const SuspendedUsers = withSuspense(UsersContainer);
 const SuspendedLogin = withSuspense(Login);
+const SuspendedChatPage = withSuspense(ChatPage);
 
 class App extends React.Component<AppMapPropsType & AppDispatchPropsType> {
   componentDidMount() {
@@ -51,7 +53,7 @@ class App extends React.Component<AppMapPropsType & AppDispatchPropsType> {
 
     return (
       <div className="app-wrapper">
-        <HeaderContainer />
+        <Header />
         <aside className="app-wrapper-sidebar">
           <Nav />
           <FriendsBar />
@@ -67,7 +69,9 @@ class App extends React.Component<AppMapPropsType & AppDispatchPropsType> {
               render={() => <SuspendedProfile />}
             />
             {/* @ts-ignore */}
-            <Route path="/users" render={() => <SuspendedUsers/>} />
+            <Route path="/users" render={() => <SuspendedUsers />} />
+            {/* @ts-ignore */}
+            <Route path="/chat" render={() => <SuspendedChatPage />} />
             {/* @ts-ignore */}
             <Route path="/news">
               <News />

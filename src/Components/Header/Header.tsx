@@ -2,14 +2,23 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import classes from "./Header.module.css";
 import { NavLink } from "react-router-dom";
-import { MapDispatchToPropsType, MapStateToPropsType } from "./HeaderContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { AppStateType } from "../../Redux/reduxStore";
+import { logOutThunk } from "../../Redux/authReducer";
 
-const Header = (props: MapStateToPropsType & MapDispatchToPropsType) => {
-  const [isAuth, setIsAuth] = useState(props.isAuth);
+const Header = () => {
+  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+  const login = useSelector((state: AppStateType) => state.auth.login)
+  const [actualAuth, setActualAuth] = useState(isAuth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsAuth(props.isAuth);
-  }, [props.isAuth]);
+    setActualAuth(isAuth);
+  }, [isAuth]);
+
+  const handleLogout = () => {
+    dispatch(logOutThunk());
+  }
 
   return (
     <header className={classes.header}>
@@ -19,10 +28,10 @@ const Header = (props: MapStateToPropsType & MapDispatchToPropsType) => {
         </figure>
       </NavLink>
       <div className={classes.login}>
-        {isAuth ? (
+        {actualAuth ? (
           <div>
-            <h6>{props.login}</h6>
-            <button onClick={props.logOutThunk}>Log Out</button>
+            <h6>{login}</h6>
+            <button onClick={handleLogout}>Log Out</button>
           </div>
         ) : (
           <NavLink to="/login">LogIn</NavLink>
