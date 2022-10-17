@@ -1,19 +1,19 @@
-import React from 'react';
-import { Switch, Route, withRouter, BrowserRouter } from 'react-router-dom';
-import { connect, Provider } from 'react-redux';
-import { compose } from 'redux';
-import store from './Redux/reduxStore';
-import './App.css';
-import Nav from './Components/Nav/Nav';
-import FriendsBar from './Components/FriendsBar/FriendsBar';
-import Footer from './Components/Footer/Footer';
-import News from './Components/News/News';
-import Music from './Components/Music/Music';
-import Header from './Components/Header/Header';
-import { initializeApp } from './Redux/appReducer';
-import Preloder from './Components/Preloader/Preloader';
-import { withSuspense } from './HOC/WithSuspense';
-import { AppStateType } from './Redux/reduxStore';
+import React from "react";
+import { Switch, Route, withRouter, BrowserRouter } from "react-router-dom";
+import { connect, Provider } from "react-redux";
+import { compose } from "redux";
+import store from "./Redux/reduxStore";
+import "./App.css";
+import Nav from "./Components/Nav/Nav";
+import FriendsBar from "./Components/FriendsBar/FriendsBar";
+import Footer from "./Components/Footer/Footer";
+import News from "./Components/News/News";
+import Music from "./Components/Music/Music";
+import Header from "./Components/Header/Header";
+import { initializeApp } from "./Redux/appReducer";
+import Preloder from "./Components/Preloader/Preloader";
+import { withSuspense } from "./HOC/WithSuspense";
+import { AppStateType } from "./Redux/reduxStore";
 
 type AppMapPropsType = ReturnType<typeof mapStateToProps>;
 type AppDispatchPropsType = {
@@ -21,19 +21,19 @@ type AppDispatchPropsType = {
 };
 
 const DialogsContainer = React.lazy(
-  () => import('./Components/Dialogs/DialogsContainer')
+  () => import("./Components/Dialogs/DialogsContainer")
 );
 
 const ProfileContainer = React.lazy(
-  () => import('./Components/Profile/ProfileContainer')
+  () => import("./Components/Profile/ProfileContainer")
 );
 
 const UsersContainer = React.lazy(
-  () => import('./Components/Users/UsersContainer')
+  () => import("./Components/Users/UsersContainer")
 );
 
-const Login = React.lazy(() => import('./Components/Login/Login'));
-const ChatPage = React.lazy(() => import('./Pages/Chat/ChatPage'));
+const Login = React.lazy(() => import("./Components/Login/Login"));
+const ChatPage = React.lazy(() => import("./Pages/Chat/ChatPage"));
 
 const SuspendedDialogs = withSuspense(DialogsContainer);
 const SuspendedProfile = withSuspense(ProfileContainer);
