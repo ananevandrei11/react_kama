@@ -15,10 +15,8 @@ type ProfileDataFormType = {
 
 const ProfileDataForm = ({ profile, handleSubmit }: ProfileDataFormType) => {
   let contactsKey = {};
-  profile.contacts && Object.keys(profile.contacts).map((site) => {
-    // @ts-ignore
-    contactsKey[site] = profile.contacts[site] || '';
-  });
+  // @ts-ignore
+  profile.contacts && Object.keys(profile.contacts).map((site) => contactsKey[site] = profile.contacts[site] || '');
 
   return (
     <Formik

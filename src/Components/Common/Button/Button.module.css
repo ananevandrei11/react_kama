@@ -1,0 +1,60 @@
+.btn {
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn_xl {
+  font-size: 20px;
+  padding: 20px;
+}
+
+.btn_l {
+  font-size: 18px;
+  padding: 15px;
+}
+
+.btn_m {
+  font-size: 16px;
+  padding: 10px;
+}
+
+.btn_s {
+  font-size: 14px;
+  padding: 5px;
+}
+
+.btn_default {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(218, 218, 218);
+}
+
+.btn_default:hover {
+  background-color: rgb(37, 37, 37);
+  box-shadow: 0px 0px 1px rgb(133, 133, 133);
+  color: #fff;
+}
+
+.btn_primary {
+  background-color: rgb(127, 255, 212, 0.7);
+  border: 1px solid rgb(127, 255, 212, 0.7);
+}
+
+.btn_primary:hover {
+  background-color: rgb(127, 255, 212, 1);
+  box-shadow: 0px 0px 1px rgb(2, 197, 132);
+}
+
+.btn_hidden {
+  background-color: rgba(149, 149, 149, 0.092);
+  border: 1px solid rgba(149, 149, 149, 0.092);
+}
+
+.btn_hidden:hover {
+  background-color: rgba(149, 149, 149, 0.5);
+  box-shadow: 0px 0px 1px rgba(149, 149, 149, 0.5);
+}

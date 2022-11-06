@@ -55,6 +55,7 @@ const Users: React.FC<PropsType> = (props) => {
       actualFilter = { ...actualFilter, friend: parsed.friend as string };
     const actualPAge = parsed.page ? Number(parsed.page) : currentPage;
     dispatch(requestUsers(actualPAge, pageSize, actualFilter));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

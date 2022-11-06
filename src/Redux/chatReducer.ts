@@ -93,6 +93,3 @@ export const sendMessage =
   };
 
 export default chatReducer;
-function v1(): any {
-  throw new Error('Function not implemented.');
-}
